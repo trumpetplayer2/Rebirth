@@ -52,6 +52,7 @@ public class PossessedEntity {
     public DyeColor getPatternColor() {return patternColor;}
     public double getMaxHealth() {return maxHealth;}
     public UUID getPlayerID() {return playerID;}
+    
     public Horse.Color getHorseColor(){return horse;}
     public Cat.Type getCatColor(){return cat;}
     public Parrot.Variant getParrotVariant(){return parrot;}
@@ -75,6 +76,8 @@ public class PossessedEntity {
     public void setLlama(Llama.Color lla) {llama = lla;}
     public void setMainPanda(Panda.Gene gene) {mainPanda = gene;}
     public void setSubPanda(Panda.Gene gene) {subPanda = gene;}
+    
+    //To DO
     
     
     
