@@ -16,6 +16,7 @@ import org.bukkit.entity.Axolotl;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Sheep;
 import org.bukkit.entity.TropicalFish;
+import org.bukkit.entity.Villager;
 import org.bukkit.entity.Wolf;
 
 import me.trumpetplayer2.Rebirth.Main;
@@ -55,13 +56,19 @@ public class OnSpectate implements Listener{
 	    e.setCancelled(true);
 	    return;
 	}
-	if(entity instanceof Player) {
+	if(entity instanceof Player || entity instanceof Villager) {
 	    e.setCancelled(true);
+	    rebirthPlayer(p);
 	    return;
 	}
 	WatcherStuff(entity, p);
 	e.setCancelled(true);
 	
+    }
+    
+    //Rebirth Player code:
+    public void rebirthPlayer(Player p) {
+        
     }
     
     public void WatcherStuff(Entity e, Player p) {

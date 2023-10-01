@@ -40,10 +40,14 @@ public class Main extends JavaPlugin implements Listener {
     	public HashMap<EntityType, LanguageCast> languageMap = new HashMap<EntityType, LanguageCast>();
 	private FileConfiguration dataConfig;
 	private File dataFile;
-    	
+    	static Main instance;
+	public static Main getInstance() {
+	    return instance;
+	}
     	//Basic Enable
 	@Override
 	public void onEnable() {
+	    instance = this;
 		//Start, reload
 		this.saveDefaultConfig();
 		this.getServer().getPluginManager().registerEvents(this, this);
