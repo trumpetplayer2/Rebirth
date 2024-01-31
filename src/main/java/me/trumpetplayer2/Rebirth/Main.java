@@ -26,6 +26,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import me.libraryaddict.disguise.DisguiseAPI;
 import me.libraryaddict.disguise.disguisetypes.PlayerDisguise;
 import me.trumpetplayer2.Rebirth.Debug.TellConsole;
+import me.trumpetplayer2.Rebirth.Events.playerBreathEvent;
 import me.trumpetplayer2.Rebirth.Languages.LanguageCast;
 import me.trumpetplayer2.Rebirth.Listeners.OnChat;
 import me.trumpetplayer2.Rebirth.Listeners.OnJoin;
@@ -38,6 +39,7 @@ import me.trumpetplayer2.Rebirth.Listeners.changeGamemode;
 public class Main extends JavaPlugin implements Listener {
     	public HashMap<UUID, PossessedEntity> possessMap = new HashMap<UUID, PossessedEntity>();
     	public HashMap<EntityType, LanguageCast> languageMap = new HashMap<EntityType, LanguageCast>();
+    	public HashMap<UUID, Integer> breathMap = new HashMap<UUID, Integer>();
 	private FileConfiguration dataConfig;
 	private File dataFile;
     	static Main instance;
@@ -148,6 +150,31 @@ public class Main extends JavaPlugin implements Listener {
 		p.setGameMode(GameMode.SURVIVAL);
 		p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(20.0);
 	}
+	
+	public void breathEventCaller() {
+	    for(Player p : Bukkit.getOnlinePlayers()) {
+	        if(!breathMap.containsKey(p.getUniqueId())) {
+	            breathMap.put(p.getUniqueId(), p.getRemainingAir());
+	            continue;
+	        }
+	        if(breathMap.get(p.getUniqueId()) != p.getRemainingAir()) {
+	            int air = p.getRemainingAir();
+	            //Fire Event
+	            playerBreathEvent e = new playerBreathEvent(p, breathMap.get(p.getUniqueId()), air);
+	            getServer().getPluginManager().callEvent(e);
+	            if(!e.isCancelled()) {
+	                air = e.getNewOxygen();
+	                p.setRemainingAir(air);
+	            }
+	            breathMap.put(p.getUniqueId(), air);
+	        }
+	        
+	    }
+	}
+	
+	
+	
+	
 	
 	
 	public void loadConfig() {
