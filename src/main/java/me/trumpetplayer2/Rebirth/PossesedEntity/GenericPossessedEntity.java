@@ -59,8 +59,9 @@ public class GenericPossessedEntity implements PossessedEntityType{
 
 	@Override
 	public void load(String dataPath, FileConfiguration dataConfig, File dataFile) {
-		// TODO Auto-generated method stub
-		
+		//Actually don't need to load anything here, since there is only 1 variant
+		//The entity is fetched before load is attempted, so this is a required method
+		//However there is nothing needed here
 	}
     
 }

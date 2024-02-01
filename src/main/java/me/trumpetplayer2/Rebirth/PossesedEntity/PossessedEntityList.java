@@ -18,13 +18,13 @@ public class PossessedEntityList {
         case AXOLOTL:
             break;
         case BEE:
-            break;
+            return new GenericBabyableEntity(e, maxHealth);
         case CAT:
             break;
         case CHICKEN:
             return new GenericBabyableEntity(e, maxHealth);
         case COD:
-            break;
+        	return new GenericAquaticEntity(e, maxHealth);
         case COW:
         	return new GenericBabyableEntity(e, maxHealth);
         case CREEPER:
@@ -40,9 +40,9 @@ public class PossessedEntityList {
         case FROG:
             break;
         case GLOW_SQUID:
-            break;
+            return new GenericAquaticEntity(e, maxHealth);
         case GOAT:
-            break;
+        	return new GenericBabyableEntity(e, maxHealth);
         case HOGLIN:
         	return new GenericBabyableEntity(e, maxHealth);
         case HORSE:
@@ -72,7 +72,7 @@ public class PossessedEntityList {
         case RABBIT:
             break;
         case SALMON:
-            break;
+        	return new GenericAquaticEntity(e, maxHealth);
         case SHEEP:
             break;
         case SHULKER:
@@ -84,11 +84,11 @@ public class PossessedEntityList {
         case SNOWMAN:
             break;
         case SQUID:
-            break;
+        	return new GenericAquaticEntity(e, maxHealth);
         case STRIDER:
             break;
         case TADPOLE:
-            break;
+        	return new GenericAquaticEntity(e, maxHealth);
         case TRADER_LLAMA:
             break;
         case TROPICAL_FISH:

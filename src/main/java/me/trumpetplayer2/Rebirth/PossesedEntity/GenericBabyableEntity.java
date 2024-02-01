@@ -1,6 +1,7 @@
 package me.trumpetplayer2.Rebirth.PossesedEntity;
 
 import java.io.File;
+import java.util.Map;
 
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.EntityType;
@@ -32,7 +33,16 @@ public class GenericBabyableEntity implements PossessedEntityType {
 
 	@Override
 	public void save(String dataPath, FileConfiguration dataConfig, File dataFile) {
-		
+		Map<String, Object> configValues = dataConfig.getConfigurationSection(dataPath).getValues(false);
+    	for (Map.Entry<String, Object> entry : configValues.entrySet()) {
+    	    dataConfig.getConfigurationSection(dataPath).set(entry.getKey(), null);
+    	}
+    	dataPath += ".";
+    	if(dataConfig.getConfigurationSection(dataPath) == null) {
+    	    dataConfig.createSection(dataPath);
+    	    }
+    	dataConfig.getConfigurationSection(dataPath).set("EntityType", entity.toString());
+    	dataConfig.getConfigurationSection(dataPath).set("Baby", isBaby);
 	}
 
 	@Override
@@ -58,7 +68,9 @@ public class GenericBabyableEntity implements PossessedEntityType {
 
 	@Override
 	public void load(String dataPath, FileConfiguration dataConfig, File dataFile) {
-		// TODO Auto-generated method stub
-		
+		//Generic Entity, Only Baby needed
+		if(dataConfig.getString(dataPath + ".Baby") != null) {
+		    isBaby = dataConfig.getBoolean(dataPath + ".Baby");
+		}
 	}
 }
