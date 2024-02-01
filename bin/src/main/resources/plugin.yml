@@ -1,0 +1,8 @@
+main: me.trumpetplayer2.Rebirth.Main
+name: Rebirth
+version: 1.0
+author: Trumpetplayer2
+api-version: 1.19
+
+commands:
+  Rebirth:

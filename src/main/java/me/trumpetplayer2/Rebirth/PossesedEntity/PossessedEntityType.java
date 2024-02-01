@@ -13,4 +13,5 @@ public interface PossessedEntityType {
     public void save(String dataPath, FileConfiguration dataConfig, File dataFile);
     public Disguise getDisguise();
     public boolean isAquatic();
+    public void load(String dataPath, FileConfiguration dataConfig, File dataFile);
 }

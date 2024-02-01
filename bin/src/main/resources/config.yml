@@ -1,0 +1,478 @@
+#####################################
+#          Rebirth Config           #
+#####################################
+languages:
+    Axolotl:
+        - Squeak
+        - Squeal
+        - Chirp
+    Bat:
+        - Squeak
+        - Squeak
+        - Squeal
+        - Screech
+    Bee:
+        - Bzz
+        - Bzzzzzz
+        - BZZZZZZZZ
+        - Bzbz
+    Blaze:
+        - Hydda
+        - Blaze noises
+        - Crackle
+        - Pop
+        - Snap
+    Cat:
+        - Meow
+        - Mroow
+        - Nyeow
+        - Nrow
+        - Mrrow
+        - Growl
+        - Hiss
+        - Purr
+        - Mew
+    Cave_Spider:
+        - Hiss
+        - Spwsp
+    Chicken:
+        - Bgawk
+        - Bawk
+        - Bk
+        - Cluck
+        - Bawgaw
+        - Gawk
+        - Gwak
+        - Bagawk
+    Cod:
+        - Splash
+        - Blub
+        - Bloop
+    Cow:
+        - Moo
+        - Mroo
+        - Grunt
+    Creeper:
+        - Hisss
+        - Ssszzzs
+        - Sszszss
+        - Szzsszzs
+    Dolphin:
+        - Squeal
+        - Squeak
+        - Click
+        - Laughter
+    Donkey:
+        - Heehaaw
+        - Haww
+        - Heee
+        - Grunt
+    Drowned:
+        - Moan
+        - Groan
+        - Err
+        - Arr
+        - Mrr
+        - Blub
+    Elder_Guardian:
+        - Gromnnm
+        - Grooaa
+        - Sssszzzszss
+        - Ewawa
+    Enderman:
+        - Vwoop
+        - Vwoovw
+        - Vwooyoov
+        - Vyoop
+        - Eeree
+        - Verov
+    Endermite:
+        - Hiss
+        - Shriek
+        - Zysz
+        - Zzasz
+    Evoker:
+        - Hrmmhrt
+        - Hrmhrthm
+        - Hrm
+        - Hrrrm
+        - Hr
+        - Yayaya
+        - Zazaza
+    Fox:
+        - Bark
+        - Screee
+        - Howl
+        - Snore
+        - Gekkering
+        - Gregege
+        - Grekegre
+        - Kegreke
+    Ghast:
+        - Shriek
+        - Moan
+        - Errerrer
+        - Errer
+        - Raaaeer
+        - Reerraa
+    Giant:
+        - How
+        - Not
+        - Allowed
+        - Cheater
+    Glow_squid:
+        - Sploosh
+        - Splish
+        - Blub
+        - Bloop
+        - Blop
+        - Glimmer
+    Goat:
+        - Bleeeaaat
+        - Bleeaat
+        - Crunch
+        - Maa
+        - Blaaa
+    Guardian:
+        - Gromnnm
+        - Grooaa
+        - Sssszzzszss
+        - Ewawa
+    Hoglin:
+        - Snort
+        - Onnk
+        - Growl
+    Horse:
+        - Whinneys
+        - Neigh
+        - Nicker
+        - Eheheherr
+    Husk:
+        - Moan
+        - Groan
+        - Err
+        - Arr
+        - Mrr
+        - Hrr
+    Illusioner:
+        - Fake Noises
+        - I'm not doing this
+        - Not natural, you need to do it
+    Iron_Golem:
+        - Clink
+        - Clack
+        - Moan
+        - Groan
+        - Buzz
+        - Clonk
+        - Clang
+        - Clog
+    Llama:
+        - Bleat
+        - Blat
+        - Swish
+        - Spat
+        - Hmm
+        - Orgle
+        - Scream
+    Magma_Cube:
+        - Splat
+        - Swish
+        - Crackle
+        - Snap
+        - Splish
+        - Wiggle
+    Mule:
+        - Heehaaw
+        - Haaww
+        - Neigh
+    Mushroom_Cow:
+        - Moo
+        - Mroo
+        - Grunt
+    Ocelot:
+        - Meow
+        - Mroow
+        - Nyeow
+        - Nrow
+        - Mrrow
+        - Growl
+        - Hiss
+        - Purr
+        - Mew
+    Panda:
+        - Roar
+        - Growl
+        - Whine
+        - Meeaa
+        - Meaa
+    Parrot:
+        - Squak
+        - Squeak
+        - Swaak
+        - Bawk
+        - Craaw
+    Phantom:
+        - Shhhh
+        - Swaaaa
+        - Crunch
+        - Swoop
+        - Saaaww
+    Pig:
+        - Oink
+        - Snort
+        - Squeal
+        - Grunt
+    Piglin:
+        - Hrrr
+        - Haawww
+        - REEEE
+        - Reeet
+        - Ryeee
+        - Ryeeet
+    Piglin_Brute:
+        - Hrrr
+        - Haawww
+        - REEEE
+        - Reeet
+        - Ryeee
+        - Ryeeet
+    Pillager:
+        - Hrmmhrt
+        - Hrmhrthm
+        - Hrm
+        - Hrrrm
+        - Hr
+    Polar_Bear:
+        - Roar
+        - Growl
+        - Whine
+        - Panting
+        - Snuffling
+        - Sniffling
+    Pufferfish:
+        - Splash
+        - Blub
+        - Bloop
+        - Fssshhhht
+        - Psshhht
+    Rabbit:
+        - Squeak
+        - Squeal
+        - Sniffle
+        - Snuff
+        - Sniff
+        - Snuffle
+    Ravager:
+        - Roar
+        - Stomp
+        - Crunch
+        - Errarr
+        - Rrraaahh
+        - Mrraahhh
+        - Mrhoow
+        - Hrreh
+        - Hrehaha
+        - Ehhrraha
+    Salmon:
+        - Splash
+        - Blub
+        - Bloop
+        - Sploosh
+        - Spish
+        - Swish
+    Sheep:
+        - Baa
+        - Baaaaa
+        - Bleeeaat
+        - Blaaat
+        - Maaaa
+        - Meeh
+        - Blep
+    Shulker:
+        - Creak
+        - Crack
+        - Vwoovwp
+        - Eervwop
+        - Rovoowp
+    Silverfish:
+        - Hsss
+        - Hsws
+        - Hsaa
+        - Hwss
+        - Swwhh
+    Skeleton:
+        - Rattle
+        - Creak
+        - Crick
+        - Clwcl
+        - Nwlwk
+    Skeleton_Horse:
+        - Groan
+        - Creak
+        - Crick
+        - Shhsha
+        - Wshasa
+        - Zswsh
+    Slime:
+        - Squish
+        - Splish
+        - Splat
+        - Wiggle
+        - Jiggle
+        - sssplss
+    Snowman:
+        - Crunch
+        - Crrhr
+        - Crr
+        - Brr
+        - Chrr
+        - Rhhch
+    Spider:
+        - Hiss
+        - Spwsp
+        - Spppsswws
+        - Swappsaw
+        - Speweewsp
+    Squid:
+        - Sploosh
+        - Splish
+        - Blub
+        - Bloop
+        - Blop
+    Stray:
+        - Rattle
+        - Creak
+        - Crick
+        - Clwcl
+        - Nwlwk
+    Strider:
+        - Graaw
+        - Greew
+        - Skraww
+        - Skreew
+        - Skree
+        - Eereewee
+        - Weearree
+        - Reeruu
+        - Rraarooo
+        - Reewww
+        - Rwwwrraa
+    Trader_Llama:
+        - Bleat
+        - Blat
+        - Swish
+        - Spat
+        - Hmm
+        - Orgle
+        - Scream
+    Tropical_Fish:
+        - Splash
+        - Blub
+        - Bloop
+        - Sploosh
+        - Spish
+        - Swish
+    Turtle:
+        - Hrr
+        - Hrree
+        - Rhheee
+        - Hraw
+        - Hroow
+    Vex:
+        - Haha
+        - Wish
+        - Swhhh
+        - Shwshh
+        - Swhahash
+        - Greaoow
+        - Ya
+        - Yahahaha
+        - Yaa
+        - Ryaoohaha
+        - Ryaoo
+    Villager:
+        - Hrrrmm
+        - Hrmm
+        - Hrr
+        - Hrrhrr
+        - Hrrhrmm
+        - Hrrrmm
+        - Hmmm
+        - Hrrhmmhr
+        - Hrrhrrhrm
+        - Hrrhrrm
+    Vindicator:
+        - Hrmmhrt
+        - Hrmhrthm
+        - Hrm
+        - Hrrrm
+        - Hr
+    Wandering_Trader:
+        - Hrrrmm
+        - Hrmm
+        - Hrr
+        - Hrrhrr
+        - Hrrhrmm
+        - Hrrrmm
+        - Hmmm
+        - Hrrhmmhr
+        - Hrrhrrhrm
+        - Hrrhrrm
+    Witch:
+        - Hrmmhrt
+        - Hrmhrthm
+        - Hrm
+        - Hrrrm
+        - Hr
+        - Gulp
+        - Hrrgluphr
+    Wither_Skeleton:
+        - Rattle
+        - Creak
+        - Crick
+        - Clwcl
+        - Nwlwk
+    Wolf:
+        - Woof
+        - Bark
+        - Growl
+        - Bow
+        - Yap
+        - Vroof
+        - Roofvroo
+        - Wroof
+        - Ruff
+    Zoglin:
+        - Grrg
+        - Hrrgrr
+        - Grhrrhrr
+        - Hrnnrrr
+        - Hgrhgr
+    Zombie:
+        - Moan
+        - Groan
+        - Err
+        - Arr
+        - Mrr
+        - Hrr
+    Zombie_Horse:
+        - Hrrrrnrr
+        - Grhrrrr
+        - Hrghggrr
+    Zombie_Villager:
+        - Moan
+        - Groan
+        - Err
+        - Arr
+        - Mrr
+        - Hrr
+        - Hrgrrhrr
+    Zombified_Piglin:
+        - REEEE
+        - Hrr
+        - Grrr
+        - Reerrr
+        - Reru
+        - Grree
+        - Reet
