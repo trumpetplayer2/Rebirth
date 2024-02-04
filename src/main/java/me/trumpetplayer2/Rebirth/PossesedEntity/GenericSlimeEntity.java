@@ -15,10 +15,8 @@ public class GenericSlimeEntity extends GenericPossessedEntity {
 
     int size = 1;
     
-    public GenericSlimeEntity(EntityType ent, double health, int slimeSize) {
+    public GenericSlimeEntity(EntityType ent, double health) {
         super(ent, health);
-        if(slimeSize < 1) {slimeSize = 1;}
-        size = slimeSize;
     }
     
     public int getSlimeSize() {

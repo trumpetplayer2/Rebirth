@@ -72,7 +72,7 @@ public class PossessedEntityList {
             break;
         case MAGMA_CUBE:
             //Generic Slime
-            break;
+            return new GenericSlimeEntity(e, maxHealth);
         case MULE:
             //Generic Baby
             return new GenericBabyableEntity(e, maxHealth);
@@ -111,7 +111,7 @@ public class PossessedEntityList {
             break;
         case SLIME:
             //Generic Slime
-            break;
+            return new GenericSlimeEntity(e, maxHealth);
         case SNIFFER:
             //Generic Babyable
         	return new GenericBabyableEntity(e, maxHealth);
