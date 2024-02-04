@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.Map;
 
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 
 import me.libraryaddict.disguise.disguisetypes.Disguise;
@@ -16,8 +17,8 @@ public class GenericBabyableEntity implements PossessedEntityType {
 	private double maxHealth = 20;
 	private boolean isBaby = false;
 	
-	public GenericBabyableEntity(EntityType ent, double health) {
-		entity = ent;
+	public GenericBabyableEntity(Entity ent, double health) {
+		entity = ent.getType();
 		maxHealth = health;
 	}
 	

@@ -5,35 +5,43 @@ import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 
+import me.trumpetplayer2.Rebirth.PossesedEntity.Passive.Aquatic.*;
+
 //import me.trumpetplayer2.Rebirth.PossesedEntity.*;
 
 public class PossessedEntityList {
     public static PossessedEntityType getPossessedEntity(EntityType e) {
-    	if(!(e.isAlive())) {return null;}
-        double maxHealth = 20;
+        if(!(e.isAlive())) {return null;}
         LivingEntity temp = (LivingEntity) Bukkit.getWorlds().get(0).spawn(Bukkit.getWorlds().get(0).getSpawnLocation(), e.getEntityClass());
-        maxHealth = temp.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue();
+        PossessedEntityType result = getPossessedEntity(temp);
         temp.remove();
+        return result;
+    }
+    
+    public static PossessedEntityType getPossessedEntity(LivingEntity entity) {
+        EntityType e = entity.getType();
+    	double maxHealth = 20;
+    	maxHealth = entity.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue();
         //Anything with Saddles, remove to prevent confusion
         switch(e) {
         case AXOLOTL:
             //Axolotl Colors, special class
-            break;
+            return new AxolotlEntity(entity, maxHealth);
         case BEE:
             //Generic Baby
-            return new GenericBabyableEntity(e, maxHealth);
+            return new GenericBabyableEntity(entity, maxHealth);
         case CAT:
             //Cat colors - Special Class
             break;
         case CHICKEN:
             //Generic Baby
-            return new GenericBabyableEntity(e, maxHealth);
+            return new GenericBabyableEntity(entity, maxHealth);
         case COD:
             //Generic Aquatic
-        	return new GenericAquaticEntity(e, maxHealth);
+        	return new GenericAquaticEntity(entity, maxHealth);
         case COW:
             //Generic Baby
-        	return new GenericBabyableEntity(e, maxHealth);
+        	return new GenericBabyableEntity(entity, maxHealth);
         case CREEPER:
             //Charged - Special class
             break;
@@ -45,7 +53,7 @@ public class PossessedEntityList {
             break;
         case DONKEY:
             //Generic Baby
-            return new GenericBabyableEntity(e, maxHealth);
+            return new GenericBabyableEntity(entity, maxHealth);
         case FOX:
             //Special Case - Snow foxes
             break;
@@ -54,28 +62,28 @@ public class PossessedEntityList {
             break;
         case GLOW_SQUID:
             //Generic Aquatic
-            return new GenericAquaticEntity(e, maxHealth);
+            return new GenericAquaticEntity(entity, maxHealth);
         case GOAT:
             //Generic Baby
-        	return new GenericBabyableEntity(e, maxHealth);
+        	return new GenericBabyableEntity(entity, maxHealth);
         case HOGLIN:
             //Generic Baby
-        	return new GenericBabyableEntity(e, maxHealth);
+        	return new GenericBabyableEntity(entity, maxHealth);
         case HORSE:
             //Several color horses
             break;
         case HUSK:
             //Generic Baby
-            return new GenericBabyableEntity(e, maxHealth);
+            return new GenericBabyableEntity(entity, maxHealth);
         case LLAMA:
             //Dif colors of llama
             break;
         case MAGMA_CUBE:
             //Generic Slime
-            return new GenericSlimeEntity(e, maxHealth);
+            return new GenericSlimeEntity(entity, maxHealth);
         case MULE:
             //Generic Baby
-            return new GenericBabyableEntity(e, maxHealth);
+            return new GenericBabyableEntity(entity, maxHealth);
         case MUSHROOM_COW:
             //Brown/Red
             break;
@@ -87,22 +95,22 @@ public class PossessedEntityList {
             break;
         case PIG:
             //Generic Baby
-        	return new GenericBabyableEntity(e, maxHealth);
+        	return new GenericBabyableEntity(entity, maxHealth);
         case PIGLIN:
             //Generic Baby
-        	return new GenericBabyableEntity(e, maxHealth);
+        	return new GenericBabyableEntity(entity, maxHealth);
         case PLAYER:
             //Special case, planned implementation
             break;
         case POLAR_BEAR:
             //Generic Baby
-        	return new GenericBabyableEntity(e, maxHealth);
+        	return new GenericBabyableEntity(entity, maxHealth);
         case RABBIT:
             //Dif Colors
             break;
         case SALMON:
             //Generic Aquatic, this isn't bedrock
-        	return new GenericAquaticEntity(e, maxHealth);
+        	return new GenericAquaticEntity(entity, maxHealth);
         case SHEEP:
             //Dif Colors
             break;
@@ -111,22 +119,22 @@ public class PossessedEntityList {
             break;
         case SLIME:
             //Generic Slime
-            return new GenericSlimeEntity(e, maxHealth);
+            return new GenericSlimeEntity(entity, maxHealth);
         case SNIFFER:
             //Generic Babyable
-        	return new GenericBabyableEntity(e, maxHealth);
+        	return new GenericBabyableEntity(entity, maxHealth);
         case SNOWMAN:
             //Pumpkin
             break;
         case SQUID:
             //Generic Aquatic
-        	return new GenericAquaticEntity(e, maxHealth);
+        	return new GenericAquaticEntity(entity, maxHealth);
         case STRIDER:
             //Generic Baby
-            return new GenericBabyableEntity(e, maxHealth);
+            return new GenericBabyableEntity(entity, maxHealth);
         case TADPOLE:
             //Generic Aquatic
-        	return new GenericAquaticEntity(e, maxHealth);
+        	return new GenericAquaticEntity(entity, maxHealth);
         case TRADER_LLAMA:
             //Dif Colors
             break;
@@ -144,18 +152,18 @@ public class PossessedEntityList {
             break;
         case ZOGLIN:
             //Generic Baby
-        	return new GenericBabyableEntity(e, maxHealth);
+        	return new GenericBabyableEntity(entity, maxHealth);
         case ZOMBIE:
             //Generic Baby. Can't swim
-        	return new GenericBabyableEntity(e, maxHealth);
+        	return new GenericBabyableEntity(entity, maxHealth);
         case ZOMBIE_VILLAGER:
             //Generic Baby
             break;
         case ZOMBIFIED_PIGLIN:
             //Generic Baby
-        	return new GenericBabyableEntity(e, maxHealth);
+        	return new GenericBabyableEntity(entity, maxHealth);
         default:
-            return new GenericPossessedEntity(e, maxHealth);
+            return new GenericPossessedEntity(entity, maxHealth);
         }
         return null;
     }

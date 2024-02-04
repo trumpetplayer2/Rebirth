@@ -4,7 +4,8 @@ import java.io.File;
 import java.util.Map;
 
 import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.Slime;
 
 import me.libraryaddict.disguise.disguisetypes.Disguise;
 import me.libraryaddict.disguise.disguisetypes.DisguiseType;
@@ -15,8 +16,10 @@ public class GenericSlimeEntity extends GenericPossessedEntity {
 
     int size = 1;
     
-    public GenericSlimeEntity(EntityType ent, double health) {
+    public GenericSlimeEntity(Entity ent, double health) {
         super(ent, health);
+        if(!(ent instanceof Slime)) return;
+        size = ((Slime)ent).getSize(); 
     }
     
     public int getSlimeSize() {

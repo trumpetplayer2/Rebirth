@@ -1,10 +1,10 @@
 package me.trumpetplayer2.Rebirth.PossesedEntity;
 
-import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Entity;
 
 public class GenericAquaticEntity extends GenericPossessedEntity {
 
-	public GenericAquaticEntity(EntityType ent, double health) {
+	public GenericAquaticEntity(Entity ent, double health) {
 		super(ent, health);
 	}
 	

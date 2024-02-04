@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.Map;
 
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 
 import me.libraryaddict.disguise.disguisetypes.Disguise;
@@ -15,8 +16,8 @@ public class GenericPossessedEntity implements PossessedEntityType{
     private EntityType entity;
     private double maxHealth = 20;
     
-    public GenericPossessedEntity(EntityType ent, double health) {
-        entity = ent;
+    public GenericPossessedEntity(Entity ent, double health) {
+        entity = ent.getType();
         maxHealth = health;
     }
     
