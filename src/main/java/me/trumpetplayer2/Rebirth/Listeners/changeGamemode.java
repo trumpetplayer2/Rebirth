@@ -8,7 +8,7 @@ import org.bukkit.event.player.PlayerGameModeChangeEvent;
 
 import me.libraryaddict.disguise.DisguiseAPI;
 import me.trumpetplayer2.Rebirth.Main;
-import me.trumpetplayer2.Rebirth.PossessedEntity;
+import me.trumpetplayer2.Rebirth.PossesedEntity.PossessedEntityList;
 
 
 public class changeGamemode implements Listener{
@@ -24,7 +24,7 @@ public class changeGamemode implements Listener{
 	    DisguiseAPI.undisguiseToAll(p);
 	}
 	if(main.possessMap.containsKey(p.getUniqueId())) {
-	    main.possessMap.put(p.getUniqueId(), new PossessedEntity(p));
+	    main.possessMap.put(p.getUniqueId(), PossessedEntityList.getPossessedEntity(p));
 	}
     }
 }

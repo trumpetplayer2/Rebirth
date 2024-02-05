@@ -12,8 +12,6 @@ import java.util.UUID;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.GameMode;
-import org.bukkit.attribute.Attribute;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -23,9 +21,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import me.libraryaddict.disguise.DisguiseAPI;
-import me.libraryaddict.disguise.disguisetypes.PlayerDisguise;
-import me.trumpetplayer2.Rebirth.Debug.TellConsole;
+import me.trumpetplayer2.Rebirth.Debug.Debug;
 import me.trumpetplayer2.Rebirth.Events.playerBreathEvent;
 import me.trumpetplayer2.Rebirth.Languages.LanguageCast;
 import me.trumpetplayer2.Rebirth.Listeners.OnChat;
@@ -33,11 +29,12 @@ import me.trumpetplayer2.Rebirth.Listeners.OnJoin;
 import me.trumpetplayer2.Rebirth.Listeners.OnLeave;
 import me.trumpetplayer2.Rebirth.Listeners.OnSpectate;
 import me.trumpetplayer2.Rebirth.Listeners.changeGamemode;
+import me.trumpetplayer2.Rebirth.PossesedEntity.PossessedEntityType;
 
 
 
 public class Main extends JavaPlugin implements Listener {
-    	public HashMap<UUID, PossessedEntity> possessMap = new HashMap<UUID, PossessedEntity>();
+    	public HashMap<UUID, PossessedEntityType> possessMap = new HashMap<UUID, PossessedEntityType>();
     	public HashMap<EntityType, LanguageCast> languageMap = new HashMap<EntityType, LanguageCast>();
     	public HashMap<UUID, Integer> breathMap = new HashMap<UUID, Integer>();
 	private FileConfiguration dataConfig;
@@ -103,53 +100,36 @@ public class Main extends JavaPlugin implements Listener {
 				return false;
 			case "save" : SaveData();
 				return false;
-			case "player" : if(!isPlayer) {
-			    if(args.length <= 2) {
-			    sender.sendMessage("No player specified, please specify a player");
-			    }
-			    //Console set player
-			    if(Bukkit.getPlayerExact(args[1]) != null) {
-				Player temp = Bukkit.getPlayerExact(args[1]);
-				rebirthPlayer(temp, temp);
-			    }else {
-				sender.sendMessage("Player " + args[1] + " is not online, make sure you enter their entire ign.");
-			    }
-			    return false;
-			}
-			p = (Player) sender;
-			if(args.length <= 2) {rebirthPlayer(p, p); return false;}
-			else {
-			    if(Bukkit.getPlayerExact(args[1]) != null) {
-				p.sendMessage("Player " + args[1] + " is not online, make sure you enter their entire ign.");
-			    }else {
-			    Player temp = Bukkit.getPlayerExact(args[1]);
-			    rebirthPlayer(p, temp);
-			    }
-			}
-			return false;
+//			case "player" : if(!isPlayer) {
+//			    if(args.length <= 2) {
+//			    sender.sendMessage("No player specified, please specify a player");
+//			    }
+//			    //Console set player
+//			    if(Bukkit.getPlayerExact(args[1]) != null) {
+//				Player temp = Bukkit.getPlayerExact(args[1]);
+//				rebirthPlayer(temp, temp);
+//			    }else {
+//				sender.sendMessage("Player " + args[1] + " is not online, make sure you enter their entire ign.");
+//			    }
+//			    return false;
+//			}
+//			p = (Player) sender;
+//			if(args.length <= 2) {rebirthPlayer(p, p); return false;}
+//			else {
+//			    if(Bukkit.getPlayerExact(args[1]) != null) {
+//				p.sendMessage("Player " + args[1] + " is not online, make sure you enter their entire ign.");
+//			    }else {
+//			    Player temp = Bukkit.getPlayerExact(args[1]);
+//			    rebirthPlayer(p, temp);
+//			    }
+//			}
+//			return false;
 			
 			default: help(sender);
 			}
 		}
 	return false;
 }
-
-	public void rebirthPlayer(Player p, Player newPlayer) {
-	    PlayerDisguise disguise;
-		if(!p.getName().equals(newPlayer.getName())) {
-		disguise = new PlayerDisguise(Bukkit.getOfflinePlayer(newPlayer.getUniqueId()).getName());
-		disguise.setViewSelfDisguise(false);
-		disguise.setEntity(p);
-		disguise.startDisguise();
-		}else {
-		    if(DisguiseAPI.getDisguise(p) != null) {
-			DisguiseAPI.getDisguise(p).removeDisguise();
-		    }
-		}
-		possessMap.put(p.getUniqueId(), new PossessedEntity(newPlayer));
-		p.setGameMode(GameMode.SURVIVAL);
-		p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(20.0);
-	}
 	
 	public void breathEventCaller() {
 	    for(Player p : Bukkit.getOnlinePlayers()) {
@@ -214,10 +194,10 @@ public class Main extends JavaPlugin implements Listener {
 	
 	public void SaveData() {
 	    if(dataConfig == null || dataFile == null) {return;}
-	    debug.debug("Saving data...");
+	    Debug.log("Saving data...");
 	    try {
-		for (Entry<UUID, PossessedEntity> entry : possessMap.entrySet()) {
-		    PossessedEntity entity = entry.getValue();
+		for (Entry<UUID, PossessedEntityType> entry : possessMap.entrySet()) {
+		    PossessedEntityType entity = entry.getValue();
 		    UUID p = entry.getKey();
 		    if(dataConfig.getConfigurationSection("players." + p.toString()) == null) {
 		    dataConfig.createSection("players." + p.toString());
@@ -226,9 +206,9 @@ public class Main extends JavaPlugin implements Listener {
 		    entity.save("players." + p, dataConfig, dataFile);
 		}
 		this.dataConfig.save(dataFile);
-		debug.debug("Save completed");
+		Debug.log("Save completed");
 	    } catch (IOException e) {
-		debug.debug("Error Saving File " + e);
+		Debug.log("Error Saving File " + e);
 	    }
 	    
 	    
@@ -240,16 +220,13 @@ public class Main extends JavaPlugin implements Listener {
 	    }
 	    
 	    if(!this.dataFile.exists()) {
-		debug.debug("Resource did not exist, creating...");
+		Debug.log("Resource did not exist, creating...");
 	    }
 	}
 	
-	
-	TellConsole debug = new TellConsole();
-	
 	public void RegisterLanguages() {
 	    for(String key : this.getConfig().getConfigurationSection("languages").getKeys(false)) {
-		languageMap.put(getEntityByName(key), RegisterPhrases(key));
+		languageMap.put(EntityType.valueOf(key), RegisterPhrases(key));
 	    }
 	}
 	
@@ -260,15 +237,6 @@ public class Main extends JavaPlugin implements Listener {
 		    }
 		LanguageCast lang = new LanguageCast(temp, key);
 		return lang;
-	    }
-	
-	 public EntityType getEntityByName(String name) {
-	        for (EntityType type : EntityType.values()) {
-	            if(type.name().equalsIgnoreCase(name)) {
-	                return type;
-	            }
-	        }
-	        return null;
 	    }
 
 	public FileConfiguration getDataConfig() {

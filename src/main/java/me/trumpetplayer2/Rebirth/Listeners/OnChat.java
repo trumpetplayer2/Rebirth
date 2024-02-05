@@ -14,7 +14,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 import me.trumpetplayer2.Rebirth.Main;
-import me.trumpetplayer2.Rebirth.PossessedEntity;
+import me.trumpetplayer2.Rebirth.PossesedEntity.PossessedEntityList;
+import me.trumpetplayer2.Rebirth.PossesedEntity.PossessedEntityType;
 
 public class OnChat implements Listener{
     Main main;
@@ -31,12 +32,12 @@ public class OnChat implements Listener{
 	    return;
 	}
 	if(main.possessMap.containsKey(p.getUniqueId())) {
-	PossessedEntity ent = main.possessMap.get(p.getUniqueId());
-	if(ent.getType().equals(EntityType.PLAYER)) {return;}
-	sendTranslated(ent.getType(), msg, e.getMessage().length());
+	PossessedEntityType ent = main.possessMap.get(p.getUniqueId());
+	if(ent.getEntityType().equals(EntityType.PLAYER)) {return;}
+	sendTranslated(ent.getEntityType(), msg, e.getMessage().length());
 	e.setCancelled(true);
 	}else {
-	    main.possessMap.put(p.getUniqueId(), new PossessedEntity(p));
+	    main.possessMap.put(p.getUniqueId(), PossessedEntityList.getPossessedEntity(p));
 	}
     }
     
@@ -46,15 +47,15 @@ public class OnChat implements Listener{
     }
     
     public void sendTranslated(EntityType e, String s, int length) {
-	HashMap<UUID, PossessedEntity> Map = main.possessMap;
-	for (Entry<UUID, PossessedEntity> entry : Map.entrySet()) {
-	    PossessedEntity entity = entry.getValue();
+	HashMap<UUID, PossessedEntityType> Map = main.possessMap;
+	for (Entry<UUID, PossessedEntityType> entry : Map.entrySet()) {
+	    PossessedEntityType entity = entry.getValue();
 	    Player p = Bukkit.getPlayer(entry.getKey());
 	    if(p == null) {break;}
-	    if(entity.getType().equals(e)) {
-		p.sendMessage(s);
+	    if(entity.getEntityType().equals(e)) {
+	    	p.sendMessage(s);
 	    }else {
-		p.sendMessage(translate(e, s, length));
+	    	p.sendMessage(translate(e, s, length));
 	    }
 	}
     }
