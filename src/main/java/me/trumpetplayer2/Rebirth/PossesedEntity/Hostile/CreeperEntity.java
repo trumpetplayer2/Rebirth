@@ -1,34 +1,33 @@
-package me.trumpetplayer2.Rebirth.PossesedEntity.Passive;
+package me.trumpetplayer2.Rebirth.PossesedEntity.Hostile;
 
 import java.io.File;
 
-import org.bukkit.DyeColor;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.entity.Creeper;
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.Sheep;
 
 import me.libraryaddict.disguise.disguisetypes.Disguise;
 import me.libraryaddict.disguise.disguisetypes.DisguiseType;
 import me.libraryaddict.disguise.disguisetypes.MobDisguise;
-import me.libraryaddict.disguise.disguisetypes.watchers.SheepWatcher;
-import me.trumpetplayer2.Rebirth.PossesedEntity.GenericBabyableEntity;
+import me.libraryaddict.disguise.disguisetypes.watchers.CreeperWatcher;
+import me.trumpetplayer2.Rebirth.PossesedEntity.GenericPossessedEntity;
 
-public class SheepEntity extends GenericBabyableEntity {
+public class CreeperEntity extends GenericPossessedEntity {
 
-    DyeColor color = DyeColor.WHITE;
+    boolean charged;
     
-    public SheepEntity(Entity ent, double health) {
+    public CreeperEntity(Entity ent, double health) {
         super(ent, health);
-        if(!(ent instanceof Sheep)) return;
-        color = ((Sheep)ent).getColor();
+        if(!(ent instanceof Creeper)) return;
+        charged = ((Creeper)ent).isPowered();
     }
     
-    public DyeColor getColor() {
-        return color;
+    public boolean getCharged() {
+        return charged;
     }
     
-    public void setColor(DyeColor c) {
-        color = c;
+    public void setCharged(boolean isCharged) {
+        charged = isCharged;
     }
     
     @Override
@@ -37,8 +36,8 @@ public class SheepEntity extends GenericBabyableEntity {
         disguise = new MobDisguise(DisguiseType.getType(super.getEntityType()));
         disguise.setViewSelfDisguise(false);
         
-        SheepWatcher watcher = (SheepWatcher) disguise.getWatcher();
-        watcher.setColor(color);
+        CreeperWatcher watcher = (CreeperWatcher) disguise.getWatcher();
+        watcher.setPowered(charged);
         
         disguise.setWatcher(watcher);
         
@@ -50,17 +49,14 @@ public class SheepEntity extends GenericBabyableEntity {
         //Load generic baby class stuff
         super.load(dataPath, dataConfig, dataFile);
         //Load Axolotl Variant
-        if(dataConfig.getString(dataPath + ".Color") != null) {
-            String variantText = dataConfig.getString(dataPath + ".Color");
-            if(DyeColor.valueOf(variantText) != null) {
-                color = DyeColor.valueOf(variantText);
-            }
+        if(dataConfig.getString(dataPath + ".Charged") != null) {
+            charged = dataConfig.getBoolean(dataPath + ".Charged");
         }
     }
     
     @Override
     public void save(String dataPath, FileConfiguration dataConfig, File dataFile) {
         super.save(dataPath, dataConfig, dataFile);
-        dataConfig.getConfigurationSection(dataPath).set("Color", color.toString());
+        dataConfig.getConfigurationSection(dataPath).set("Charged", charged);
     }
 }

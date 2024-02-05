@@ -1,28 +1,26 @@
-package me.trumpetplayer2.Rebirth.PossesedEntity.Passive;
+package me.trumpetplayer2.Rebirth.PossesedEntity.Hostile;
 
 import java.io.File;
 
 import org.bukkit.DyeColor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.Sheep;
+import org.bukkit.entity.Shulker;
 
 import me.libraryaddict.disguise.disguisetypes.Disguise;
 import me.libraryaddict.disguise.disguisetypes.DisguiseType;
 import me.libraryaddict.disguise.disguisetypes.MobDisguise;
-import me.libraryaddict.disguise.disguisetypes.watchers.SheepWatcher;
-import me.trumpetplayer2.Rebirth.PossesedEntity.GenericBabyableEntity;
+import me.libraryaddict.disguise.disguisetypes.watchers.ShulkerWatcher;
+import me.trumpetplayer2.Rebirth.PossesedEntity.GenericPossessedEntity;
 
-public class SheepEntity extends GenericBabyableEntity {
-
-    DyeColor color = DyeColor.WHITE;
-    
-    public SheepEntity(Entity ent, double health) {
+public class ShulkerEntity extends GenericPossessedEntity {
+    DyeColor color = DyeColor.PURPLE;
+    public ShulkerEntity(Entity ent, double health) {
         super(ent, health);
-        if(!(ent instanceof Sheep)) return;
-        color = ((Sheep)ent).getColor();
+        if(!(ent instanceof Shulker)) return;
+        color = ((Shulker)ent).getColor();
     }
-    
+
     public DyeColor getColor() {
         return color;
     }
@@ -37,7 +35,7 @@ public class SheepEntity extends GenericBabyableEntity {
         disguise = new MobDisguise(DisguiseType.getType(super.getEntityType()));
         disguise.setViewSelfDisguise(false);
         
-        SheepWatcher watcher = (SheepWatcher) disguise.getWatcher();
+        ShulkerWatcher watcher = (ShulkerWatcher) disguise.getWatcher();
         watcher.setColor(color);
         
         disguise.setWatcher(watcher);

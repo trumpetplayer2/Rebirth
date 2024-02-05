@@ -2,33 +2,33 @@ package me.trumpetplayer2.Rebirth.PossesedEntity.Passive;
 
 import java.io.File;
 
-import org.bukkit.DyeColor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.Sheep;
+import org.bukkit.entity.Fox;
+import org.bukkit.entity.Fox.Type;
 
 import me.libraryaddict.disguise.disguisetypes.Disguise;
 import me.libraryaddict.disguise.disguisetypes.DisguiseType;
 import me.libraryaddict.disguise.disguisetypes.MobDisguise;
-import me.libraryaddict.disguise.disguisetypes.watchers.SheepWatcher;
+import me.libraryaddict.disguise.disguisetypes.watchers.FoxWatcher;
 import me.trumpetplayer2.Rebirth.PossesedEntity.GenericBabyableEntity;
 
-public class SheepEntity extends GenericBabyableEntity {
+public class FoxEntity extends GenericBabyableEntity {
 
-    DyeColor color = DyeColor.WHITE;
+    Type color;
     
-    public SheepEntity(Entity ent, double health) {
+    public FoxEntity(Entity ent, double health) {
         super(ent, health);
-        if(!(ent instanceof Sheep)) return;
-        color = ((Sheep)ent).getColor();
+        if(!(ent instanceof Fox)) return;
+        color = ((Fox)ent).getFoxType();
     }
     
-    public DyeColor getColor() {
+    public Type getType() {
         return color;
     }
     
-    public void setColor(DyeColor c) {
-        color = c;
+    public void setType(Type type) {
+        color = type;
     }
     
     @Override
@@ -37,8 +37,8 @@ public class SheepEntity extends GenericBabyableEntity {
         disguise = new MobDisguise(DisguiseType.getType(super.getEntityType()));
         disguise.setViewSelfDisguise(false);
         
-        SheepWatcher watcher = (SheepWatcher) disguise.getWatcher();
-        watcher.setColor(color);
+        FoxWatcher watcher = (FoxWatcher) disguise.getWatcher();
+        watcher.setType(color);
         
         disguise.setWatcher(watcher);
         
@@ -50,10 +50,10 @@ public class SheepEntity extends GenericBabyableEntity {
         //Load generic baby class stuff
         super.load(dataPath, dataConfig, dataFile);
         //Load Axolotl Variant
-        if(dataConfig.getString(dataPath + ".Color") != null) {
-            String variantText = dataConfig.getString(dataPath + ".Color");
-            if(DyeColor.valueOf(variantText) != null) {
-                color = DyeColor.valueOf(variantText);
+        if(dataConfig.getString(dataPath + ".Type") != null) {
+            String variantText = dataConfig.getString(dataPath + ".Type");
+            if(Type.valueOf(variantText) != null) {
+                color = Type.valueOf(variantText);
             }
         }
     }
@@ -61,6 +61,6 @@ public class SheepEntity extends GenericBabyableEntity {
     @Override
     public void save(String dataPath, FileConfiguration dataConfig, File dataFile) {
         super.save(dataPath, dataConfig, dataFile);
-        dataConfig.getConfigurationSection(dataPath).set("Color", color.toString());
+        dataConfig.getConfigurationSection(dataPath).set("Type", color.toString());
     }
 }

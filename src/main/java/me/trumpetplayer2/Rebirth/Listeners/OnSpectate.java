@@ -115,7 +115,6 @@ public class OnSpectate implements Listener{
 	if(watcher instanceof AxolotlWatcher) {
 	    AxolotlWatcher axolotl = (AxolotlWatcher) watcher;
 	    Axolotl ax = (Axolotl) e;
-	    axolotl.setVarient(ax.getVariant());
 	    newEntity.setAxolotlVariant(ax.getVariant());
 	}
 	if(watcher instanceof TropicalFishWatcher) {

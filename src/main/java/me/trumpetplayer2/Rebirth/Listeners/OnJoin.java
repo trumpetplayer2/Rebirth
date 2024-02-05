@@ -18,7 +18,6 @@ import me.libraryaddict.disguise.disguisetypes.DisguiseType;
 import me.libraryaddict.disguise.disguisetypes.FlagWatcher;
 import me.libraryaddict.disguise.disguisetypes.MobDisguise;
 import me.libraryaddict.disguise.disguisetypes.PlayerDisguise;
-import me.libraryaddict.disguise.disguisetypes.watchers.AxolotlWatcher;
 import me.libraryaddict.disguise.disguisetypes.watchers.CatWatcher;
 import me.libraryaddict.disguise.disguisetypes.watchers.FoxWatcher;
 import me.libraryaddict.disguise.disguisetypes.watchers.HorseWatcher;
@@ -112,10 +111,6 @@ public class OnJoin implements Listener{
 	if(watcher instanceof ParrotWatcher) {
 	    ParrotWatcher parrot = (ParrotWatcher) watcher;
 	    parrot.setVariant(e.getParrotVariant());
-	}
-	if(watcher instanceof AxolotlWatcher) {
-	    AxolotlWatcher axolotl = (AxolotlWatcher) watcher;
-	    axolotl.setVarient(e.getAxolotlVariant());
 	}
 	if(watcher instanceof TropicalFishWatcher) {
 	    TropicalFishWatcher fish = (TropicalFishWatcher) watcher;

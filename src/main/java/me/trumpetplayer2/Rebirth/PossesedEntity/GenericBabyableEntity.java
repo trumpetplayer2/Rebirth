@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.Map;
 
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.entity.Ageable;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 
@@ -20,6 +21,8 @@ public class GenericBabyableEntity implements PossessedEntityType {
 	public GenericBabyableEntity(Entity ent, double health) {
 		entity = ent.getType();
 		maxHealth = health;
+		if(!(ent instanceof Ageable)) return;
+		isBaby = !((Ageable)ent).isAdult();
 	}
 	
 	@Override
@@ -46,7 +49,8 @@ public class GenericBabyableEntity implements PossessedEntityType {
     	dataConfig.getConfigurationSection(dataPath).set("Baby", isBaby);
 	}
 
-	@Override
+	@SuppressWarnings("deprecation")
+    @Override
 	public Disguise getDisguise() {
 		MobDisguise disguise;
     	disguise = new MobDisguise(DisguiseType.getType(entity), !isBaby);

@@ -1,44 +1,49 @@
-package me.trumpetplayer2.Rebirth.PossesedEntity.Passive;
+package me.trumpetplayer2.Rebirth.PossesedEntity.Neutral;
 
 import java.io.File;
+
+import javax.annotation.Nullable;
 
 import org.bukkit.DyeColor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.Sheep;
+import org.bukkit.entity.Wolf;
 
 import me.libraryaddict.disguise.disguisetypes.Disguise;
 import me.libraryaddict.disguise.disguisetypes.DisguiseType;
 import me.libraryaddict.disguise.disguisetypes.MobDisguise;
-import me.libraryaddict.disguise.disguisetypes.watchers.SheepWatcher;
+import me.libraryaddict.disguise.disguisetypes.watchers.WolfWatcher;
 import me.trumpetplayer2.Rebirth.PossesedEntity.GenericBabyableEntity;
 
-public class SheepEntity extends GenericBabyableEntity {
-
-    DyeColor color = DyeColor.WHITE;
-    
-    public SheepEntity(Entity ent, double health) {
+public class WolfEntity extends GenericBabyableEntity {
+    DyeColor collar;
+    public WolfEntity(Entity ent, double health) {
         super(ent, health);
-        if(!(ent instanceof Sheep)) return;
-        color = ((Sheep)ent).getColor();
+        if(!(ent instanceof Wolf)) return;
+        if(((Wolf)ent).getCollarColor() != null) {
+            collar = ((Wolf)ent).getCollarColor();
+        }
     }
     
-    public DyeColor getColor() {
-        return color;
+    public void setCollarColor(DyeColor color) {
+        collar = color;
     }
     
-    public void setColor(DyeColor c) {
-        color = c;
+    @Nullable
+    public DyeColor getCollarColor() {
+        return collar;
     }
-    
+
     @Override
     public Disguise getDisguise() {
         MobDisguise disguise;
         disguise = new MobDisguise(DisguiseType.getType(super.getEntityType()));
         disguise.setViewSelfDisguise(false);
         
-        SheepWatcher watcher = (SheepWatcher) disguise.getWatcher();
-        watcher.setColor(color);
+        WolfWatcher watcher = (WolfWatcher) disguise.getWatcher();
+        if(collar != null) {
+            watcher.setCollarColor(collar);
+        }
         
         disguise.setWatcher(watcher);
         
@@ -49,11 +54,10 @@ public class SheepEntity extends GenericBabyableEntity {
     public void load(String dataPath, FileConfiguration dataConfig, File dataFile) {
         //Load generic baby class stuff
         super.load(dataPath, dataConfig, dataFile);
-        //Load Axolotl Variant
-        if(dataConfig.getString(dataPath + ".Color") != null) {
-            String variantText = dataConfig.getString(dataPath + ".Color");
+        if(dataConfig.getString(dataPath + ".Collar") != null) {
+            String variantText = dataConfig.getString(dataPath + ".Collar");
             if(DyeColor.valueOf(variantText) != null) {
-                color = DyeColor.valueOf(variantText);
+                collar = DyeColor.valueOf(variantText);
             }
         }
     }
@@ -61,6 +65,8 @@ public class SheepEntity extends GenericBabyableEntity {
     @Override
     public void save(String dataPath, FileConfiguration dataConfig, File dataFile) {
         super.save(dataPath, dataConfig, dataFile);
-        dataConfig.getConfigurationSection(dataPath).set("Color", color.toString());
+        if(collar != null) {
+            dataConfig.getConfigurationSection(dataPath).set("Collar", collar.toString());
+        }
     }
 }

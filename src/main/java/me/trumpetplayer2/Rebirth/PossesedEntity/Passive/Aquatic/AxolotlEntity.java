@@ -4,6 +4,7 @@ import java.io.File;
 
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Axolotl;
+import org.bukkit.entity.Axolotl.Variant;
 import org.bukkit.entity.Entity;
 
 import me.libraryaddict.disguise.disguisetypes.Disguise;
@@ -14,7 +15,7 @@ import me.trumpetplayer2.Rebirth.PossesedEntity.GenericBabyableEntity;
 
 public class AxolotlEntity extends GenericBabyableEntity {
 
-    Axolotl.Variant variant = Axolotl.Variant.BLUE;
+    Variant variant = Variant.BLUE;
     
     public AxolotlEntity(Entity ent, double health) {
         super(ent, health);
@@ -27,7 +28,7 @@ public class AxolotlEntity extends GenericBabyableEntity {
         variant = color;
     }
     
-    public Axolotl.Variant getVariant(){
+    public Variant getVariant(){
         return variant;
     }
     
@@ -43,7 +44,7 @@ public class AxolotlEntity extends GenericBabyableEntity {
         disguise.setViewSelfDisguise(false);
         
         AxolotlWatcher watcher = (AxolotlWatcher) disguise.getWatcher();
-        watcher.setVarient(variant);
+        watcher.setVariant(variant);
         
         disguise.setWatcher(watcher);
         
@@ -57,8 +58,8 @@ public class AxolotlEntity extends GenericBabyableEntity {
         //Load Axolotl Variant
         if(dataConfig.getString(dataPath + ".Variant") != null) {
             String variantText = dataConfig.getString(dataPath + ".Variant");
-            if(Axolotl.Variant.valueOf(variantText) != null) {
-                variant = Axolotl.Variant.valueOf(variantText);
+            if(Variant.valueOf(variantText) != null) {
+                variant = Variant.valueOf(variantText);
             }
         }
     }

@@ -6,6 +6,10 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 
 import me.trumpetplayer2.Rebirth.PossesedEntity.Passive.Aquatic.*;
+import me.trumpetplayer2.Rebirth.PossesedEntity.Hostile.*;
+import me.trumpetplayer2.Rebirth.PossesedEntity.Neutral.LlamaEntity;
+import me.trumpetplayer2.Rebirth.PossesedEntity.Neutral.PandaEntity;
+import me.trumpetplayer2.Rebirth.PossesedEntity.Neutral.WolfEntity;
 import me.trumpetplayer2.Rebirth.PossesedEntity.Passive.*;
 
 //import me.trumpetplayer2.Rebirth.PossesedEntity.*;
@@ -33,7 +37,7 @@ public class PossessedEntityList {
             return new GenericBabyableEntity(entity, maxHealth);
         case CAT:
             //Cat colors - Special Class
-            break;
+            return new CatEntity(entity, maxHealth);
         case CHICKEN:
             //Generic Baby
             return new GenericBabyableEntity(entity, maxHealth);
@@ -45,22 +49,19 @@ public class PossessedEntityList {
         	return new GenericBabyableEntity(entity, maxHealth);
         case CREEPER:
             //Charged - Special class
-            break;
+            return new CreeperEntity(entity, maxHealth);
         case DROWNED:
             //Generic Baby Aquatic
-        	break;
-        case DOLPHIN:
-            //Special Case - Dolphins Grace
-            break;
+        	return new GenericAquaticBabyableEntity(entity, maxHealth);
         case DONKEY:
             //Generic Baby
             return new GenericBabyableEntity(entity, maxHealth);
         case FOX:
             //Special Case - Snow foxes
-            break;
+            return new FoxEntity(entity, maxHealth);
         case FROG:
-            //Special Case - Multiple colors
-            break;
+            //Special Case - Multiple colors, Semiaquatic
+            return new FrogEntity(entity, maxHealth);
         case GLOW_SQUID:
             //Generic Aquatic
             return new GenericAquaticEntity(entity, maxHealth);
@@ -72,13 +73,13 @@ public class PossessedEntityList {
         	return new GenericBabyableEntity(entity, maxHealth);
         case HORSE:
             //Several color horses
-            break;
+            return new HorseEntity(entity, maxHealth);
         case HUSK:
             //Generic Baby
             return new GenericBabyableEntity(entity, maxHealth);
         case LLAMA:
             //Dif colors of llama
-            break;
+            return new LlamaEntity(entity, maxHealth);
         case MAGMA_CUBE:
             //Generic Slime
             return new GenericSlimeEntity(entity, maxHealth);
@@ -87,13 +88,13 @@ public class PossessedEntityList {
             return new GenericBabyableEntity(entity, maxHealth);
         case MUSHROOM_COW:
             //Brown/Red
-            break;
+            return new MooshroomEntity(entity, maxHealth);
         case PANDA:
             //Different colors
-            break;
+            return new PandaEntity(entity, maxHealth);
         case PARROT:
             //Dif colors
-            break;
+            return new ParrotEntity(entity, maxHealth);
         case PIG:
             //Generic Baby
         	return new GenericBabyableEntity(entity, maxHealth);
@@ -101,14 +102,16 @@ public class PossessedEntityList {
             //Generic Baby
         	return new GenericBabyableEntity(entity, maxHealth);
         case PLAYER:
-            //Special case, planned implementation
+            //TODO Special case, planned implementation
             break;
         case POLAR_BEAR:
             //Generic Baby
         	return new GenericBabyableEntity(entity, maxHealth);
         case RABBIT:
             //Dif Colors
-            break;
+            return new RabbitEntity(entity, maxHealth);
+        case PUFFERFISH:
+            return new GenericAquaticEntity(entity, maxHealth);
         case SALMON:
             //Generic Aquatic, this isn't bedrock
         	return new GenericAquaticEntity(entity, maxHealth);
@@ -117,7 +120,7 @@ public class PossessedEntityList {
             return new SheepEntity(entity, maxHealth);
         case SHULKER:
             //Dif Colors
-            break;
+            return new ShulkerEntity(entity, maxHealth);
         case SLIME:
             //Generic Slime
             return new GenericSlimeEntity(entity, maxHealth);
@@ -126,7 +129,7 @@ public class PossessedEntityList {
         	return new GenericBabyableEntity(entity, maxHealth);
         case SNOWMAN:
             //Pumpkin
-            break;
+            return new SnowmanEntity(entity, maxHealth);
         case SQUID:
             //Generic Aquatic
         	return new GenericAquaticEntity(entity, maxHealth);
@@ -138,19 +141,19 @@ public class PossessedEntityList {
         	return new GenericAquaticEntity(entity, maxHealth);
         case TRADER_LLAMA:
             //Dif Colors
-            break;
+            return new LlamaEntity(entity, maxHealth);
         case TROPICAL_FISH:
             //Dif Colors
-            break;
+            return new TropicalFishEntity(entity, maxHealth);
         case TURTLE:
             //Special Case - Breath both air and water
-            break;
+            return new GenericAquaticBabyableEntity(entity, maxHealth);
         case VILLAGER:
-            //Special case - see player
+            //TODO Special case - see player
             break;
         case WOLF:
             //Collar Colors
-            break;
+            return new WolfEntity(entity, maxHealth);
         case ZOGLIN:
             //Generic Baby
         	return new GenericBabyableEntity(entity, maxHealth);
@@ -158,8 +161,8 @@ public class PossessedEntityList {
             //Generic Baby. Can't swim
         	return new GenericBabyableEntity(entity, maxHealth);
         case ZOMBIE_VILLAGER:
-            //Generic Baby
-            break;
+            //Villager Type + Baby
+            return new ZombieVillagerEntity(entity, maxHealth);
         case ZOMBIFIED_PIGLIN:
             //Generic Baby
         	return new GenericBabyableEntity(entity, maxHealth);

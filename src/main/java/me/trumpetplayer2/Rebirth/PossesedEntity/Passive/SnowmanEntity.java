@@ -2,33 +2,32 @@ package me.trumpetplayer2.Rebirth.PossesedEntity.Passive;
 
 import java.io.File;
 
-import org.bukkit.DyeColor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.Sheep;
+import org.bukkit.entity.Snowman;
 
 import me.libraryaddict.disguise.disguisetypes.Disguise;
 import me.libraryaddict.disguise.disguisetypes.DisguiseType;
 import me.libraryaddict.disguise.disguisetypes.MobDisguise;
-import me.libraryaddict.disguise.disguisetypes.watchers.SheepWatcher;
-import me.trumpetplayer2.Rebirth.PossesedEntity.GenericBabyableEntity;
+import me.libraryaddict.disguise.disguisetypes.watchers.SnowmanWatcher;
+import me.trumpetplayer2.Rebirth.PossesedEntity.GenericPossessedEntity;
 
-public class SheepEntity extends GenericBabyableEntity {
+public class SnowmanEntity extends GenericPossessedEntity{
 
-    DyeColor color = DyeColor.WHITE;
+    boolean derp = false;
     
-    public SheepEntity(Entity ent, double health) {
+    public SnowmanEntity(Entity ent, double health) {
         super(ent, health);
-        if(!(ent instanceof Sheep)) return;
-        color = ((Sheep)ent).getColor();
+        if(!(ent instanceof Snowman)) return;
+        derp = ((Snowman)ent).isDerp();
     }
     
-    public DyeColor getColor() {
-        return color;
+    public boolean isDerp() {
+        return derp;
     }
     
-    public void setColor(DyeColor c) {
-        color = c;
+    public void setDerp(boolean isDerp) {
+        derp = isDerp;
     }
     
     @Override
@@ -37,8 +36,8 @@ public class SheepEntity extends GenericBabyableEntity {
         disguise = new MobDisguise(DisguiseType.getType(super.getEntityType()));
         disguise.setViewSelfDisguise(false);
         
-        SheepWatcher watcher = (SheepWatcher) disguise.getWatcher();
-        watcher.setColor(color);
+        SnowmanWatcher watcher = (SnowmanWatcher) disguise.getWatcher();
+        watcher.setDerp(derp);
         
         disguise.setWatcher(watcher);
         
@@ -50,17 +49,15 @@ public class SheepEntity extends GenericBabyableEntity {
         //Load generic baby class stuff
         super.load(dataPath, dataConfig, dataFile);
         //Load Axolotl Variant
-        if(dataConfig.getString(dataPath + ".Color") != null) {
-            String variantText = dataConfig.getString(dataPath + ".Color");
-            if(DyeColor.valueOf(variantText) != null) {
-                color = DyeColor.valueOf(variantText);
-            }
+        if(dataConfig.getString(dataPath + ".Derp") != null) {
+            derp = dataConfig.getBoolean(dataPath + ".Derp");
         }
     }
     
     @Override
     public void save(String dataPath, FileConfiguration dataConfig, File dataFile) {
         super.save(dataPath, dataConfig, dataFile);
-        dataConfig.getConfigurationSection(dataPath).set("Color", color.toString());
+        dataConfig.getConfigurationSection(dataPath).set("Derp", derp);
     }
+
 }
