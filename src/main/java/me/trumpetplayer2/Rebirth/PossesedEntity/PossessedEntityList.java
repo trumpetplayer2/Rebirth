@@ -6,6 +6,7 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 
 import me.trumpetplayer2.Rebirth.PossesedEntity.Passive.Aquatic.*;
+import me.trumpetplayer2.Rebirth.PossesedEntity.Passive.*;
 
 //import me.trumpetplayer2.Rebirth.PossesedEntity.*;
 
@@ -113,7 +114,7 @@ public class PossessedEntityList {
         	return new GenericAquaticEntity(entity, maxHealth);
         case SHEEP:
             //Dif Colors
-            break;
+            return new SheepEntity(entity, maxHealth);
         case SHULKER:
             //Dif Colors
             break;
