@@ -38,7 +38,11 @@ public class Main extends JavaPlugin implements Listener {
     	public HashMap<EntityType, LanguageCast> languageMap = new HashMap<EntityType, LanguageCast>();
     	public HashMap<UUID, Integer> breathMap = new HashMap<UUID, Integer>();
 	private FileConfiguration dataConfig;
+	private FileConfiguration skinConfig;
+	private FileConfiguration nameConfig;
 	private File dataFile;
+	private File skinFile;
+	private File nameFile;
     	static Main instance;
 	public static Main getInstance() {
 	    return instance;
@@ -49,6 +53,7 @@ public class Main extends JavaPlugin implements Listener {
 	    instance = this;
 		//Start, reload
 		this.saveDefaultConfig();
+		this.saveDefaultConfigs();
 		this.getServer().getPluginManager().registerEvents(this, this);
 		this.getServer().getPluginManager().registerEvents(new OnSpectate(this), this);
 		this.getServer().getPluginManager().registerEvents(new changeGamemode(this), this);
@@ -158,12 +163,12 @@ public class Main extends JavaPlugin implements Listener {
 	
 	
 	public void loadConfig() {
-	    RegisterLanguages();
-	    
 	    saveDefaultConfig();
+	    saveDefaultConfigs();
+	    RegisterLanguages();
 	    reloadConfig();
 	    LoadData();
-	    
+	    reloadNaS();
 	    
 		//Use this.getConfig().get**TYPEHERE**("header.level1.etc")
 	};
@@ -214,19 +219,30 @@ public class Main extends JavaPlugin implements Listener {
 	    
 	}
 	
-	public void saveDefaultConfig() {
+	public void saveDefaultConfigs() {
 	    if(dataFile == null) {
 		dataFile = new File(getDataFolder(), "data.yml");
 	    }
-	    
 	    if(!this.dataFile.exists()) {
 		Debug.log("Resource did not exist, creating...");
 	    }
+	    if(nameFile == null) {
+	        nameFile = new File(getDataFolder(), "name.yml");
+	    }
+	    if(!this.nameFile.exists()) {
+	        Debug.log("Error loading nameFile");
+	    }
+	    if(skinFile == null) {
+            skinFile = new File(getDataFolder(), "skin.yml");
+        }
+        if(!this.skinFile.exists()) {
+            Debug.log("Error loading skinFile");
+        }
 	}
 	
 	public void RegisterLanguages() {
 	    for(String key : this.getConfig().getConfigurationSection("languages").getKeys(false)) {
-		languageMap.put(EntityType.valueOf(key), RegisterPhrases(key));
+		languageMap.put(EntityType.valueOf(key.toUpperCase()), RegisterPhrases(key));
 	    }
 	}
 	
@@ -246,4 +262,49 @@ public class Main extends JavaPlugin implements Listener {
 	public File getDataFile() {
 	    return dataFile;
 	}
+	
+	public void reloadNaS() {
+	    if(this.skinFile == null) {
+	        this.skinFile = new File(getDataFolder(), "skin.yml");
+	    }
+	    skinConfig = YamlConfiguration.loadConfiguration(skinFile);
+	    InputStream inStream = getResource("skin.yml");
+	    if(inStream != null) {
+	        YamlConfiguration dataFile = YamlConfiguration.loadConfiguration(new InputStreamReader(inStream));
+	        skinConfig.setDefaults(dataFile);
+	    }
+	    
+	    
+	    if(this.nameFile == null) {
+            this.nameFile = new File(getDataFolder(), "name.yml");
+        }
+        nameConfig = YamlConfiguration.loadConfiguration(nameFile);
+        InputStream inStream2 = getResource("name.yml");
+        if(inStream2 != null) {
+            YamlConfiguration dataFile = YamlConfiguration.loadConfiguration(new InputStreamReader(inStream2));
+            nameConfig.setDefaults(dataFile);
+        }
+	}
+	
+	public FileConfiguration skinList() {
+	    if(skinConfig == null) {
+	        reloadNaS();
+	    }
+	    return skinConfig;
+	}
+	
+	public FileConfiguration nameList() {
+	    if(nameConfig == null) {
+            reloadNaS();
+        }
+        return nameConfig;
+    }
+	
+	public File skinFile() {
+        return skinFile;
+    }
+    
+    public File nameFile() {
+        return nameFile;
+    }
 }

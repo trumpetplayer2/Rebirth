@@ -12,12 +12,14 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
-
+import me.libraryaddict.disguise.disguisetypes.Disguise;
 import me.libraryaddict.disguise.disguisetypes.MobDisguise;
+import me.libraryaddict.disguise.disguisetypes.PlayerDisguise;
 import me.trumpetplayer2.Rebirth.Main;
 import me.trumpetplayer2.Rebirth.Debug.Debug;
 import me.trumpetplayer2.Rebirth.PossesedEntity.PossessedEntityList;
 import me.trumpetplayer2.Rebirth.PossesedEntity.PossessedEntityType;
+import me.trumpetplayer2.Rebirth.PossesedEntity.PossessedPlayerEntity;
 
 public class OnJoin implements Listener{
     Main main;
@@ -40,10 +42,18 @@ public class OnJoin implements Listener{
 	    if(dataConfig.getConfigurationSection("players") != null) {
 		//The player has previously joined! Add to the tracker
 		String key = p.getUniqueId().toString();
-		EntityType type = EntityType.valueOf(main.getData().getString("players." + key + ".EntityType"));
-		PossessedEntityType possessedEntity = PossessedEntityList.getPossessedEntity(type);
+		if(main.getData().getString("players." + key + ".EntityType") != null) {
+		    EntityType type = EntityType.valueOf(main.getData().getString("players." + key + ".EntityType").toUpperCase());
+		    PossessedEntityType possessedEntity;
+		    if(type == EntityType.PLAYER) {
+		        possessedEntity = PossessedEntityList.getPossessedEntity(p);
+		    }else {
+		        possessedEntity = PossessedEntityList.getPossessedEntity(type);
+		    }
+		
 		possessedEntity.load(key, dataConfig, dataFile);
 		main.possessMap.put(p.getUniqueId(), possessedEntity);
+	    }
 	    }
 	    }
 	if(main.possessMap.containsKey(p.getUniqueId())) {
@@ -68,15 +78,27 @@ public class OnJoin implements Listener{
     }
     
     public void WatcherStuff(Player p, PossessedEntityType e) {
-	//If the entity is a player, run through player instead of entity
-	if(e.getEntityType().equals(EntityType.PLAYER)) {
-	    return;
-	}
+        if(e instanceof PossessedEntityType) {
+            PossessedPlayerEntity ent = (PossessedPlayerEntity)e;
+            //If the entity is a player, run through player instead of entity
+            if(ent.getSkin() != p.getUniqueId()) {
+                ent.generateRandomSkin(Main.getInstance().skinList(), Main.getInstance().skinFile());
+            }
+            if(ent.getName() != p.getName()) {
+                ent.generateRandomName(Main.getInstance().skinList(), Main.getInstance().skinFile());
+            }
+            ent.load(main.getData().getString("players." + p.getUniqueId()), dataConfig, dataFile);
+            PlayerDisguise disguise = (PlayerDisguise) e.getDisguise();
+            p.sendMessage("You are " + ent.getName());
+            disguise.setEntity(p);
+            p.setGameMode(GameMode.SURVIVAL);
+            disguise.startDisguise();
+            p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(ent.getEntityMaxHealth());
+            return;
+        }
 	
-	MobDisguise disguise = (MobDisguise) e.getDisguise();
+	Disguise disguise = e.getDisguise();
 	
-	//Hide disguise, tell player what they are, and update stats
-	disguise.setViewSelfDisguise(false);
 	p.sendMessage("You are a " + e.getEntityType().toString().toLowerCase());
 	disguise.setEntity(p);
 	p.setGameMode(GameMode.SURVIVAL);

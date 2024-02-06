@@ -102,8 +102,8 @@ public class PossessedEntityList {
             //Generic Baby
         	return new GenericBabyableEntity(entity, maxHealth);
         case PLAYER:
-            //TODO Special case, planned implementation
-            break;
+            //Special case, planned implementation
+            return new PossessedPlayerEntity(entity, maxHealth);
         case POLAR_BEAR:
             //Generic Baby
         	return new GenericBabyableEntity(entity, maxHealth);
@@ -149,8 +149,8 @@ public class PossessedEntityList {
             //Special Case - Breath both air and water
             return new GenericAquaticBabyableEntity(entity, maxHealth);
         case VILLAGER:
-            //TODO Special case - see player
-            break;
+            // Special case - see player
+            return new PossessedPlayerEntity(entity, maxHealth);
         case WOLF:
             //Collar Colors
             return new WolfEntity(entity, maxHealth);
@@ -169,6 +169,5 @@ public class PossessedEntityList {
         default:
             return new GenericPossessedEntity(entity, maxHealth);
         }
-        return null;
     }
 }

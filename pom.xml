@@ -6,41 +6,14 @@
   <packaging>jar</packaging>
   <name>${project.artifactId}-${project.version}</name>
   
+  <properties>
+  <java.version>17</java.version>
+  <project.directory>E:\Servers\Minecraft\Spigot 1.20.4 Test Server\plugins\${project.name}.jar</project.directory>
+  <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+  
   <build>
-    	<plugins>
-    	  <plugin>
-   		     <groupId>net.md-5</groupId>
-                <artifactId>specialsource-maven-plugin</artifactId>
-                <version>1.2.4</version>
-  				<executions>
-				<execution>
-				<phase>package</phase>
-				<goals>
-				<goal>remap</goal>
-				</goals>
-				<id>remap-obf</id>
-				<configuration>
-				<srgIn>org.spigotmc:minecraft-server:1.20.1-R0.1-SNAPSHOT:txt:maps-mojang</srgIn>
-				<reverse>true</reverse>
-				<remappedDependencies>org.spigotmc:spigot:1.20.1-R0.1-SNAPSHOT:jar:eek:riginal</remappedDependencies>
-				<remappedArtifactAttached>true</remappedArtifactAttached>
-				<remappedClassifierName>remapped-obf</remappedClassifierName>
-			</configuration>
-		</execution>
-		<execution>
-			<phase>package</phase>
-			<goals>
-			<goal>remap</goal>
-			</goals>
-			<id>remap-spigot</id>
-			<configuration>
-			<inputFile>${project.build.directory}/${project.artifactId}-${project.version}-remapped-obf.jar</inputFile>
-			<srgIn>org.spigotmc:minecraft-server:1.20.1-R0.1-SNAPSHOT:csrg:maps-spigot</srgIn>
-			<remappedDependencies>org.spigotmc:1.20.1-R0.1-SNAPSHOT:jar:remapped-obf</remappedDependencies>
-			</configuration>
-			</execution>
-			</executions>
-			</plugin>
+  		<plugins>
   			<plugin>
   			<groupId>org.apache.maven.plugins</groupId>
   			<artifactId>maven-compiler-plugin</artifactId>
@@ -50,6 +23,7 @@
   			<target>${java.version}</target>
   			</configuration>
   			</plugin>
+  			
   			<plugin>
   			<groupId>org.apache.maven.plugins</groupId>
   			<artifactId>maven-shade-plugin</artifactId>
@@ -75,12 +49,6 @@
   			</resource>
   		</resources>
   </build>
-  
-  <properties>
-  <java.version>17</java.version>
-  <project.directory>E:\Servers\Minecraft\Spigot 1.20 Test Server\plugins\${project.name}.jar</project.directory>
-  <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-  </properties>
   <repositories>
     <repository>
         <id>spigot-repo</id>
@@ -94,12 +62,16 @@
   <id>md_5-public</id>
   <url>https://repo.md-5.net/content/groups/public/</url>
 </repository>
+  <repository>
+    <id>dmulloy2-repo</id>
+    <url>https://repo.dmulloy2.net/repository/public/</url>
+  </repository>
   </repositories>
   <dependencies>
     <dependency>
            <groupId>org.spigotmc</groupId>
            <artifactId>spigot</artifactId>
-           <version>1.20.1-R0.1-SNAPSHOT</version>
+           <version>1.20.4-R0.1-SNAPSHOT</version>
            <scope>provided</scope>
     </dependency>
     <dependency>
@@ -114,5 +86,10 @@
    		<version>10.0.42</version>
    		<scope>provided</scope>
 </dependency>
+<dependency>
+    <groupId>com.comphenix.protocol</groupId>
+    <artifactId>ProtocolLib</artifactId>
+    <version>4.8.0</version>
+  </dependency>
   </dependencies>
 </project>

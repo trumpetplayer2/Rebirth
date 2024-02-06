@@ -21,6 +21,10 @@ public class GenericPossessedEntity implements PossessedEntityType{
         maxHealth = health;
     }
     
+    protected void setEntityType(EntityType ent) {
+        entity = ent;
+    }
+    
     @Override
     public EntityType getEntityType() {
         return entity;
