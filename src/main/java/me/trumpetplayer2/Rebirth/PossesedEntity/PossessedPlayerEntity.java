@@ -95,8 +95,8 @@ public class PossessedPlayerEntity extends GenericPossessedEntity {
             Debug.log("Skin was null, getting random");
             
         }
-        disguise = new PlayerDisguise(name, Bukkit.getOfflinePlayer(skin).getPlayerProfile().getName());
-        disguise.setViewSelfDisguise(false);
+        disguise = new PlayerDisguise(name);
+        disguise.setViewSelfDisguise(true);
         
         PlayerWatcher watcher = (PlayerWatcher) disguise.getWatcher();
         watcher.setName(name);
