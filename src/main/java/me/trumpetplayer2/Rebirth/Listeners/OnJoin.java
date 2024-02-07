@@ -13,7 +13,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
 import me.libraryaddict.disguise.disguisetypes.Disguise;
-import me.libraryaddict.disguise.disguisetypes.MobDisguise;
 import me.libraryaddict.disguise.disguisetypes.PlayerDisguise;
 import me.trumpetplayer2.Rebirth.Main;
 import me.trumpetplayer2.Rebirth.Debug.Debug;
@@ -42,7 +41,7 @@ public class OnJoin implements Listener{
 	    if(dataConfig.getConfigurationSection("players") != null) {
 		//The player has previously joined! Add to the tracker
 		String key = p.getUniqueId().toString();
-		if(main.getData().getString("players." + key + ".EntityType") != null) {
+		if(main.getData().getConfigurationSection("players." + key + ".EntityType") != null) {
 		    EntityType type = EntityType.valueOf(main.getData().getString("players." + key + ".EntityType").toUpperCase());
 		    PossessedEntityType possessedEntity;
 		    if(type == EntityType.PLAYER) {
@@ -91,9 +90,13 @@ public class OnJoin implements Listener{
             PlayerDisguise disguise = (PlayerDisguise) e.getDisguise();
             p.sendMessage("You are " + ent.getName());
             disguise.setEntity(p);
+            disguise.setViewSelfDisguise(true);
             p.setGameMode(GameMode.SURVIVAL);
             disguise.startDisguise();
             p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(ent.getEntityMaxHealth());
+            if(p.getUniqueId() == ent.getSkin() && p.getName() == ent.getName()) {
+                disguise.removeDisguise(p);
+            }
             return;
         }
 	

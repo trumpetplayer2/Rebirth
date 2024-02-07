@@ -17,6 +17,7 @@ import me.libraryaddict.disguise.disguisetypes.PlayerDisguise;
 import me.libraryaddict.disguise.disguisetypes.watchers.PlayerWatcher;
 import me.trumpetplayer2.Rebirth.Main;
 import me.trumpetplayer2.Rebirth.Debug.Debug;
+import me.trumpetplayer2.Rebirth.Utils.SkinFetcher;
 
 public class PossessedPlayerEntity extends GenericPossessedEntity {
 
@@ -94,11 +95,12 @@ public class PossessedPlayerEntity extends GenericPossessedEntity {
             Debug.log("Skin was null, getting random");
             
         }
-        disguise = new PlayerDisguise(Bukkit.getOfflinePlayer(skin).getPlayerProfile().getName());
+        disguise = new PlayerDisguise(name, Bukkit.getOfflinePlayer(skin).getPlayerProfile().getName());
         disguise.setViewSelfDisguise(false);
         
         PlayerWatcher watcher = (PlayerWatcher) disguise.getWatcher();
         watcher.setName(name);
+        watcher.setSkin(SkinFetcher.getPlayerName(skin));
         
         disguise.setWatcher(watcher);
         
