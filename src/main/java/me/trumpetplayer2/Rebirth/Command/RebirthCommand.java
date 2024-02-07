@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Nullable;
-import javax.annotation.processing.Completions;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -90,7 +89,6 @@ public class RebirthCommand implements CommandExecutor, TabCompleter{
 }
 
     private void rebirthPlayer(Player p, @Nullable Player skin) {
-        Main main = Main.getInstance();
         boolean randomSkin = false;
         if(skin == null) {
             randomSkin = true;
