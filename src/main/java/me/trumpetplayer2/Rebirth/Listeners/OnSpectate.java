@@ -55,7 +55,7 @@ public class OnSpectate implements Listener{
             if(e.getEntityType() == EntityType.PLAYER) {
                 PossessedPlayerEntity ent = (PossessedPlayerEntity)e;
                 ent.load(main.getData().getString("players." + p.getUniqueId()), Main.getInstance().getDataConfig(), Main.getInstance().getDataFile());
-                PlayerDisguise disguise = (PlayerDisguise) e.getDisguise();
+                PlayerDisguise disguise = (PlayerDisguise) ent.getDisguise();
                 p.sendMessage("You are " + ent.getName());
                 disguise.setEntity(p);
                 disguise.setViewSelfDisguise(true);

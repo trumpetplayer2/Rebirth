@@ -21,6 +21,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import me.trumpetplayer2.Rebirth.Command.RebirthCommand;
 import me.trumpetplayer2.Rebirth.Debug.Debug;
 import me.trumpetplayer2.Rebirth.Events.playerBreathEvent;
 import me.trumpetplayer2.Rebirth.Languages.LanguageCast;
@@ -34,16 +35,16 @@ import me.trumpetplayer2.Rebirth.PossesedEntity.PossessedEntityType;
 
 
 public class Main extends JavaPlugin implements Listener {
-    	public HashMap<UUID, PossessedEntityType> possessMap = new HashMap<UUID, PossessedEntityType>();
-    	public HashMap<EntityType, LanguageCast> languageMap = new HashMap<EntityType, LanguageCast>();
-    	public HashMap<UUID, Integer> breathMap = new HashMap<UUID, Integer>();
+    public HashMap<UUID, PossessedEntityType> possessMap = new HashMap<UUID, PossessedEntityType>();
+    public HashMap<EntityType, LanguageCast> languageMap = new HashMap<EntityType, LanguageCast>();
+    public HashMap<UUID, Integer> breathMap = new HashMap<UUID, Integer>();
 	private FileConfiguration dataConfig;
 	private FileConfiguration skinConfig;
 	private FileConfiguration nameConfig;
 	private File dataFile;
 	private File skinFile;
 	private File nameFile;
-    	static Main instance;
+	static Main instance;
 	public static Main getInstance() {
 	    return instance;
 	}
@@ -54,6 +55,8 @@ public class Main extends JavaPlugin implements Listener {
 		//Start, reload
 		this.saveDefaultConfig();
 		this.saveDefaultConfigs();
+		getCommand("rebirth").setExecutor(new RebirthCommand());
+		getCommand("rebirth").setTabCompleter(new RebirthCommand());
 		this.getServer().getPluginManager().registerEvents(this, this);
 		this.getServer().getPluginManager().registerEvents(new OnSpectate(this), this);
 		this.getServer().getPluginManager().registerEvents(new changeGamemode(this), this);
@@ -68,73 +71,6 @@ public class Main extends JavaPlugin implements Listener {
 	public void onDisable() {
 	    SaveData();
 	}
-
-	public void help(CommandSender sender) {
-		//If the command "/Pyroshot" is typed, bring up help menu
-		sender.sendMessage(ChatColor.BLUE + "-=-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-");
-		sender.sendMessage(ChatColor.BLUE + "           Rebirth Command Help         ");
-		sender.sendMessage(ChatColor.BLUE + "-=-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-");
-		sender.sendMessage(ChatColor.BLUE + "'/Rebirth Help' -> Shows this area in chat");
-		sender.sendMessage(ChatColor.BLUE + "'/Rebirth Save' -> Force saves possession table");
-		sender.sendMessage(ChatColor.BLUE + "'/Rebirth Player (Player)' -> Make a player");
-		sender.sendMessage(ChatColor.BLUE + "-=-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-");
-	}
-	
-	public void invalidPermission(CommandSender sender){
-		//Invalid perm message
-		sender.sendMessage(ChatColor.DARK_RED + "Invalid Permission");
-	}
-	
-	//Command interface
-	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-		if(label.equalsIgnoreCase("Rebirth")) {
-		    Player p;
-		    Boolean isPlayer = false;
-		    if(sender instanceof Player) {
-			p = (Player) sender;
-			isPlayer = true;
-		    }
-		    
-			if(args.length == 0) {
-				help(sender);
-				return false;
-			}
-			String subCommand = args[0];
-			switch(subCommand.toLowerCase()) {
-			case "help": help(sender);
-				return false;
-			case "save" : SaveData();
-				return false;
-//			case "player" : if(!isPlayer) {
-//			    if(args.length <= 2) {
-//			    sender.sendMessage("No player specified, please specify a player");
-//			    }
-//			    //Console set player
-//			    if(Bukkit.getPlayerExact(args[1]) != null) {
-//				Player temp = Bukkit.getPlayerExact(args[1]);
-//				rebirthPlayer(temp, temp);
-//			    }else {
-//				sender.sendMessage("Player " + args[1] + " is not online, make sure you enter their entire ign.");
-//			    }
-//			    return false;
-//			}
-//			p = (Player) sender;
-//			if(args.length <= 2) {rebirthPlayer(p, p); return false;}
-//			else {
-//			    if(Bukkit.getPlayerExact(args[1]) != null) {
-//				p.sendMessage("Player " + args[1] + " is not online, make sure you enter their entire ign.");
-//			    }else {
-//			    Player temp = Bukkit.getPlayerExact(args[1]);
-//			    rebirthPlayer(p, temp);
-//			    }
-//			}
-//			return false;
-			
-			default: help(sender);
-			}
-		}
-	return false;
-}
 	
 	public void breathEventCaller() {
 	    for(Player p : Bukkit.getOnlinePlayers()) {

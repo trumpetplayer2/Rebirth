@@ -87,7 +87,7 @@ public class OnJoin implements Listener{
                 ent.generateRandomName(Main.getInstance().skinList(), Main.getInstance().skinFile());
             }
             ent.load(main.getData().getString("players." + p.getUniqueId()), dataConfig, dataFile);
-            PlayerDisguise disguise = (PlayerDisguise) e.getDisguise();
+            PlayerDisguise disguise = (PlayerDisguise) ent.getDisguise();
             p.sendMessage("You are " + ent.getName());
             disguise.setEntity(p);
             disguise.setViewSelfDisguise(true);
