@@ -97,8 +97,8 @@ public class RebirthCommand implements CommandExecutor, TabCompleter{
         PossessedPlayerEntity ent = (PossessedPlayerEntity)PossessedEntityList.getPossessedEntity(skin);
         if(randomSkin) {
             //If the entity is a player, run through player instead of entity
-            ent.generateRandomSkin(Main.getInstance().skinList(), Main.getInstance().skinFile());
-            ent.generateRandomName(Main.getInstance().skinList(), Main.getInstance().skinFile());
+            ent.generateRandomSkin();
+            ent.generateRandomName();
         }
         PlayerDisguise disguise = (PlayerDisguise) ent.getDisguise();
         p.sendMessage("You are " + ent.getName());

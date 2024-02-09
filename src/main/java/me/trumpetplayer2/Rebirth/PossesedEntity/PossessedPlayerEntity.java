@@ -31,12 +31,13 @@ public class PossessedPlayerEntity extends GenericPossessedEntity {
 			name = ent.getName();
 		}
 		if(ent instanceof Villager) {
-		    generateRandomSkin(Main.getInstance().skinList(), Main.getInstance().skinFile());
-		    generateRandomName(Main.getInstance().nameList(), Main.getInstance().nameFile());
+		    generateRandomSkin();
+		    generateRandomName();
 		}
 	}
 
-	public void generateRandomSkin(FileConfiguration dataConfig, File dataFile) {
+	public void generateRandomSkin() {
+	    FileConfiguration dataConfig = Main.getInstance().skinList();
 		//Fetch a file with UUID's
 	    List<String> skins = dataConfig.getStringList("skins");
 		if(skins == null) {
@@ -50,13 +51,13 @@ public class PossessedPlayerEntity extends GenericPossessedEntity {
 		//Make sure UUID is correct, if not, Log and run again
 		if(temp == null) {
 		    Debug.log("Invalid random skin " + randomSkin);
-		    generateRandomSkin(dataConfig, dataFile);
+		    generateRandomSkin();
 		}
 		skin = temp;
-		Debug.log("Grabbing skin " + skin);
 	}
 	
-	public void generateRandomName(FileConfiguration dataConfig, File dataFile) {
+	public void generateRandomName() {
+	    FileConfiguration dataConfig = Main.getInstance().nameList();
 	    //Fetch a file with UUID's
 	    List<String> names = dataConfig.getStringList("names");
         if(names == null) {
@@ -99,7 +100,8 @@ public class PossessedPlayerEntity extends GenericPossessedEntity {
         
         PlayerWatcher watcher = (PlayerWatcher) disguise.getWatcher();
         watcher.setName(name);
-        watcher.setSkin(SkinFetcher.getPlayerName(skin));
+        SkinFetcher playerInfo = new SkinFetcher(skin);
+        watcher.setSkin(playerInfo.getPlayerName());
         
         disguise.setWatcher(watcher);
         
@@ -108,14 +110,12 @@ public class PossessedPlayerEntity extends GenericPossessedEntity {
     
     @Override
     public void load(String dataPath, FileConfiguration dataConfig, File dataFile) {
-        //Load generic baby class stuff
-        super.load(dataPath, dataConfig, dataFile);
-        //Load Axolotl Variant
         if(dataConfig.getString(dataPath + ".UUID") != null) {
             String variantText = dataConfig.getString(dataPath + ".UUID");
             if(UUID.fromString(variantText) != null) {
-                UUID.fromString(variantText);
+                skin = UUID.fromString(variantText);
             }
+        }else {
         }
         if(dataConfig.getString(dataPath + ".Name") != null) {
             if(dataConfig.getString(dataPath + ".Name") != null) {

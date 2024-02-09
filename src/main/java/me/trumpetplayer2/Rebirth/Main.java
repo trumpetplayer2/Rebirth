@@ -32,9 +32,42 @@ import me.trumpetplayer2.Rebirth.PossesedEntity.PossessedEntityType;
 
 
 public class Main extends JavaPlugin implements Listener {
-    public HashMap<UUID, PossessedEntityType> possessMap = new HashMap<UUID, PossessedEntityType>();
-    public HashMap<EntityType, LanguageCast> languageMap = new HashMap<EntityType, LanguageCast>();
-    public HashMap<UUID, Integer> breathMap = new HashMap<UUID, Integer>();
+    HashMap<UUID, PossessedEntityType> possessMap = new HashMap<UUID, PossessedEntityType>();
+    
+    public HashMap<UUID, PossessedEntityType> getPossessMap() {
+        return possessMap;
+    }
+    public void updatePossessMap(UUID p, PossessedEntityType ent) {
+        if(ent == null) return;
+        if(p == null) return;
+        if(possessMap.containsKey(p)) {
+            possessMap.remove(p);
+        }
+        possessMap.put(p, ent);
+    }
+    public HashMap<EntityType, LanguageCast> getLanguageMap() {
+        return languageMap;
+    }
+    public void updateLanguageMap(EntityType ent, LanguageCast language) {
+        if(ent == null) return;
+        if(language == null) return;
+        if(languageMap.containsKey(ent)) {
+            languageMap.remove(ent);
+        }
+        languageMap.put(ent, language);
+    }
+    public HashMap<UUID, Integer> getBreathMap() {
+        return breathMap;
+    }
+
+    public void removeFromPossessMap(UUID p) {
+        if(possessMap.containsKey(p)) {
+            possessMap.remove(p);
+        }
+    }
+    
+    HashMap<EntityType, LanguageCast> languageMap = new HashMap<EntityType, LanguageCast>();
+    HashMap<UUID, Integer> breathMap = new HashMap<UUID, Integer>();
 	private FileConfiguration dataConfig;
 	private FileConfiguration skinConfig;
 	private FileConfiguration nameConfig;

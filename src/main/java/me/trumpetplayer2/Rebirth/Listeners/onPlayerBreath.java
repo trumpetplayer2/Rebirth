@@ -11,6 +11,6 @@ public class onPlayerBreath implements Listener {
     @EventHandler
     public void onPlayerBreathEvent(playerBreathEvent e) {
         Player p = e.getPlayer();
-        Main.getInstance().possessMap.get(p.getUniqueId());
+        Main.getInstance().getPossessMap().get(p.getUniqueId());
     }
 }

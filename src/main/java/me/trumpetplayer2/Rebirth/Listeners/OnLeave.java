@@ -19,8 +19,8 @@ public class OnLeave implements Listener{
 	//Save the data and remove player from map
 	Player p = e.getPlayer();
 	plugin.SaveData();
-	if(plugin.possessMap.containsKey(p.getUniqueId())) {
-	    plugin.possessMap.remove(p.getUniqueId());
+	if(plugin.getPossessMap().containsKey(p.getUniqueId())) {
+	    plugin.removeFromPossessMap(p.getUniqueId());
 	}
     }
 }

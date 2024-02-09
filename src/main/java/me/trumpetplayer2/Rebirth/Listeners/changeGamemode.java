@@ -23,8 +23,6 @@ public class changeGamemode implements Listener{
 	if(newMode.equals(GameMode.SPECTATOR)) {
 	    DisguiseAPI.undisguiseToAll(p);
 	}
-	if(main.possessMap.containsKey(p.getUniqueId())) {
-	    main.possessMap.put(p.getUniqueId(), PossessedEntityList.getPossessedEntity(p));
-	}
+	main.updatePossessMap(p.getUniqueId(), PossessedEntityList.getPossessedEntity(p));
     }
 }

@@ -30,6 +30,7 @@ public class OnJoin implements Listener{
 	dataConfig = main.getDataConfig();
 	dataFile = main.getDataFile();
     }
+    
     @EventHandler
     public void JoinListener(PlayerJoinEvent e) {
 	//Make sure the File is connected
@@ -39,28 +40,29 @@ public class OnJoin implements Listener{
 	if(!(this.dataConfig == null || this.dataFile == null)) {
 	    //Check if the player has previously joined
 	    if(dataConfig.getConfigurationSection("players") != null) {
-		//The player has previously joined! Add to the tracker
-		String key = p.getUniqueId().toString();
-		if(main.getData().getConfigurationSection("players." + key + ".EntityType") != null) {
-		    EntityType type = EntityType.valueOf(main.getData().getString("players." + key + ".EntityType").toUpperCase());
-		    PossessedEntityType possessedEntity;
-		    if(type == EntityType.PLAYER) {
-		        possessedEntity = PossessedEntityList.getPossessedEntity(p);
-		    }else {
-		        possessedEntity = PossessedEntityList.getPossessedEntity(type);
-		    }
-		
-		possessedEntity.load(key, dataConfig, dataFile);
-		main.possessMap.put(p.getUniqueId(), possessedEntity);
+	        //The player has previously joined! Add to the tracker
+	        String key = p.getUniqueId().toString();
+	        if(dataConfig.getString("players." + key + ".EntityType") != null) {
+	            EntityType type = EntityType.valueOf(dataConfig.getString("players." + key + ".EntityType").toUpperCase());
+	            PossessedEntityType possessedEntity;
+	            if(type == EntityType.PLAYER) {
+	                possessedEntity = PossessedEntityList.getPossessedEntity(p);
+	            }else {
+	                possessedEntity = PossessedEntityList.getPossessedEntity(type);
+	            }
+	            possessedEntity.load("players." + key, dataConfig, dataFile);
+	            
+	            main.updatePossessMap(p.getUniqueId(), possessedEntity);
+	        }
 	    }
-	    }
-	    }
-	if(main.possessMap.containsKey(p.getUniqueId())) {
+	}
+	if(main.getPossessMap().containsKey(p.getUniqueId())) {
 	    //Disguise the player if they have joined before
 	    disguisePlayer(p);
 	}else {
 	    //Add player as self to file
-	main.possessMap.put(p.getUniqueId(), PossessedEntityList.getPossessedEntity(p));
+	    Debug.log("Adding " + p.getName() + " to the data file");
+	    main.updatePossessMap(p.getUniqueId(), PossessedEntityList.getPossessedEntity(p));
 	}
 	//Save data
 	main.SaveData();
@@ -72,25 +74,16 @@ public class OnJoin implements Listener{
 	if(p.getGameMode().equals(GameMode.SPECTATOR)) {
 	    return;}
 	//Grab the entity from the tracker
-	PossessedEntityType entity = main.possessMap.get(p.getUniqueId());
+	PossessedEntityType entity = main.getPossessMap().get(p.getUniqueId());
 	WatcherStuff(p, entity);
     }
     
     public void WatcherStuff(Player p, PossessedEntityType e) {
-        if(e instanceof PossessedEntityType) {
+        if(e instanceof PossessedPlayerEntity) {
             PossessedPlayerEntity ent = (PossessedPlayerEntity)e;
-            //If the entity is a player, run through player instead of entity
-            if(ent.getSkin() != p.getUniqueId()) {
-                ent.generateRandomSkin(Main.getInstance().skinList(), Main.getInstance().skinFile());
-            }
-            if(ent.getName() != p.getName()) {
-                ent.generateRandomName(Main.getInstance().skinList(), Main.getInstance().skinFile());
-            }
-            ent.load(main.getData().getString("players." + p.getUniqueId()), dataConfig, dataFile);
             PlayerDisguise disguise = (PlayerDisguise) ent.getDisguise();
             p.sendMessage("You are " + ent.getName());
             disguise.setEntity(p);
-            disguise.setViewSelfDisguise(true);
             p.setGameMode(GameMode.SURVIVAL);
             disguise.startDisguise();
             p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(ent.getEntityMaxHealth());

@@ -16,6 +16,7 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 import me.trumpetplayer2.Rebirth.Main;
 import me.trumpetplayer2.Rebirth.PossesedEntity.PossessedEntityList;
 import me.trumpetplayer2.Rebirth.PossesedEntity.PossessedEntityType;
+import me.trumpetplayer2.Rebirth.PossesedEntity.PossessedPlayerEntity;
 
 public class OnChat implements Listener{
     Main main;
@@ -31,13 +32,22 @@ public class OnChat implements Listener{
 	    e.setCancelled(true);
 	    return;
 	}
-	if(main.possessMap.containsKey(p.getUniqueId())) {
-	PossessedEntityType ent = main.possessMap.get(p.getUniqueId());
-	if(ent.getEntityType().equals(EntityType.PLAYER)) {return;}
+	if(main.getPossessMap().containsKey(p.getUniqueId())) {
+	PossessedEntityType ent = main.getPossessMap().get(p.getUniqueId());
+	if(ent instanceof PossessedPlayerEntity) {
+	    //If player is a PossessedPlayerEntity, send all players the message regardless of possession
+	    PossessedPlayerEntity pent = (PossessedPlayerEntity)ent;
+	    e.setCancelled(true);
+	    for (Entry<UUID, PossessedEntityType> entry : main.getPossessMap().entrySet()) {
+	        Player o = Bukkit.getPlayer(entry.getKey());
+	        o.sendMessage(ChatColor.WHITE + "<" + pent.getName() + ChatColor.WHITE + "> " + e.getMessage());
+	    }
+	    return;
+	}
 	sendTranslated(ent.getEntityType(), msg, e.getMessage().length());
 	e.setCancelled(true);
 	}else {
-	    main.possessMap.put(p.getUniqueId(), PossessedEntityList.getPossessedEntity(p));
+	    main.updatePossessMap(p.getUniqueId(), PossessedEntityList.getPossessedEntity(p));
 	}
     }
     
@@ -47,7 +57,7 @@ public class OnChat implements Listener{
     }
     
     public void sendTranslated(EntityType e, String s, int length) {
-	HashMap<UUID, PossessedEntityType> Map = main.possessMap;
+	HashMap<UUID, PossessedEntityType> Map = main.getPossessMap();
 	for (Entry<UUID, PossessedEntityType> entry : Map.entrySet()) {
 	    PossessedEntityType entity = entry.getValue();
 	    Player p = Bukkit.getPlayer(entry.getKey());
@@ -61,8 +71,8 @@ public class OnChat implements Listener{
     }
     
     public String translate(EntityType e, String s, int length) {
-	if(main.languageMap.containsKey(e)) {
-	    return main.languageMap.get(e).translate(length);
+	if(main.getLanguageMap().containsKey(e)) {
+	    return main.getLanguageMap().get(e).translate(length);
 	}else {
 	    return "<Unknown> *Insert Unknown Noises Here*";
 	}

@@ -8,6 +8,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.GameMode;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Villager;
 
 import me.trumpetplayer2.Rebirth.Main;
 import me.trumpetplayer2.Rebirth.PossesedEntity.PossessedEntityList;
@@ -31,42 +32,35 @@ public class OnSpectate implements Listener{
 	Player p = e.getPlayer();
 	if(!(entity instanceof LivingEntity)) {e.setCancelled(true); return;}
 	PossessedEntityType possessedEntity;
-	EntityType type = entity.getType();
-    if(type == EntityType.PLAYER) {
-        possessedEntity = PossessedEntityList.getPossessedEntity(p);
-    }else {
-        possessedEntity = PossessedEntityList.getPossessedEntity(type);
+    possessedEntity = PossessedEntityList.getPossessedEntity((LivingEntity) entity);
+    if(!((entity instanceof Player) || (entity instanceof Villager))){
+        entity.remove();
     }
     WatcherStuff(p, possessedEntity);
 	e.setCancelled(true);
 	
     }
-    
-    public void disguisePlayer(Player p) {
-        //No need to disguise if GMSP
-        if(p.getGameMode().equals(GameMode.SPECTATOR)) {
-            return;}
-        //Grab the entity from the tracker
-        PossessedEntityType entity = main.possessMap.get(p.getUniqueId());
-        WatcherStuff(p, (PossessedPlayerEntity) entity);
-        }
         
-        public void WatcherStuff(Player p, PossessedEntityType e) {
-            if(e.getEntityType() == EntityType.PLAYER) {
-                PossessedPlayerEntity ent = (PossessedPlayerEntity)e;
-                ent.load(main.getData().getString("players." + p.getUniqueId()), Main.getInstance().getDataConfig(), Main.getInstance().getDataFile());
-                PlayerDisguise disguise = (PlayerDisguise) ent.getDisguise();
-                p.sendMessage("You are " + ent.getName());
-                disguise.setEntity(p);
-                disguise.setViewSelfDisguise(true);
-                p.setGameMode(GameMode.SURVIVAL);
-                disguise.startDisguise();
-                p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(ent.getEntityMaxHealth());
-                if(p.getUniqueId() == ent.getSkin() && p.getName() == ent.getName()) {
-                    disguise.removeDisguise(p);
-                }
-                return;
+    public void WatcherStuff(Player p, PossessedEntityType e) {
+        if(e.getEntityType() == EntityType.PLAYER) {
+            PossessedPlayerEntity ent = (PossessedPlayerEntity)e;
+            if(!(ent.getName() == p.getName() && ent.getSkin() == p.getUniqueId())) {
+                ent.generateRandomName();
+                ent.generateRandomSkin();
             }
+            PlayerDisguise disguise = (PlayerDisguise) ent.getDisguise();
+            p.sendMessage("You are " + ent.getName());
+            disguise.setEntity(p);
+            disguise.setViewSelfDisguise(true);
+            p.setGameMode(GameMode.SURVIVAL);
+            disguise.startDisguise();
+            p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(ent.getEntityMaxHealth());
+            if(p.getUniqueId() == ent.getSkin() && p.getName() == ent.getName()) {
+                disguise.removeDisguise(p);
+            }
+            Main.getInstance().updatePossessMap(p.getUniqueId(), ent);
+            return;
+        }
         
         Disguise disguise = e.getDisguise();
         
@@ -76,6 +70,7 @@ public class OnSpectate implements Listener{
         p.setGameMode(GameMode.SURVIVAL);
         disguise.startDisguise();
         p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(e.getEntityMaxHealth());
+        Main.getInstance().updatePossessMap(p.getUniqueId(), e);
         }
     
 }
