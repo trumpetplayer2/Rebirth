@@ -76,7 +76,7 @@ public class SkinFetcher {
         return playerInfo.get(key);
     }
     
-    public HashMap<String, String> getPropertuy(String key){
+    public HashMap<String, String> getProperty(String key){
         if(!properties.containsKey(key)) return null;
         return properties.get(key);
     }

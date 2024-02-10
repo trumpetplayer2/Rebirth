@@ -6,37 +6,24 @@ import java.util.Map;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Ageable;
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
 
 import me.libraryaddict.disguise.disguisetypes.Disguise;
 import me.libraryaddict.disguise.disguisetypes.DisguiseType;
 import me.libraryaddict.disguise.disguisetypes.MobDisguise;
 
-public class GenericBabyableEntity implements PossessedEntityType {
+public class GenericBabyableEntity extends GenericPossessedEntity {
 
-	private EntityType entity;
-	private double maxHealth = 20;
 	private boolean isBaby = false;
 	
 	public GenericBabyableEntity(Entity ent, double health) {
-		entity = ent.getType();
-		maxHealth = health;
+	    super(ent, health);
 		if(!(ent instanceof Ageable)) return;
 		isBaby = !((Ageable)ent).isAdult();
-	}
-	
-	@Override
-	public EntityType getEntityType() {
-		return entity;
-	}
-
-	@Override
-	public double getEntityMaxHealth() {
-		return maxHealth;
 	}	
 
 	@Override
 	public void save(String dataPath, FileConfiguration dataConfig, File dataFile) {
+	    super.save(dataPath, dataConfig, dataFile);
 		Map<String, Object> configValues = dataConfig.getConfigurationSection(dataPath).getValues(false);
     	for (Map.Entry<String, Object> entry : configValues.entrySet()) {
     	    dataConfig.getConfigurationSection(dataPath).set(entry.getKey(), null);
@@ -45,7 +32,6 @@ public class GenericBabyableEntity implements PossessedEntityType {
     	if(dataConfig.getConfigurationSection(dataPath) == null) {
     	    dataConfig.createSection(dataPath);
     	    }
-    	dataConfig.getConfigurationSection(dataPath).set("EntityType", entity.toString());
     	dataConfig.getConfigurationSection(dataPath).set("Baby", isBaby);
 	}
 
@@ -53,14 +39,9 @@ public class GenericBabyableEntity implements PossessedEntityType {
     @Override
 	public Disguise getDisguise() {
 		MobDisguise disguise;
-    	disguise = new MobDisguise(DisguiseType.getType(entity), !isBaby);
+    	disguise = new MobDisguise(DisguiseType.getType(super.getEntityType()), !isBaby);
     	disguise.setViewSelfDisguise(false);
         return disguise;
-	}
-
-	@Override
-	public boolean isAquatic() {
-		return false;
 	}
 	
 	public void setIsBaby(boolean b) {

@@ -50,9 +50,13 @@ public class OnJoin implements Listener{
 	            }else {
 	                possessedEntity = PossessedEntityList.getPossessedEntity(type);
 	            }
+	            if(possessedEntity == null) {
+                    return;
+                }
 	            possessedEntity.load("players." + key, dataConfig, dataFile);
 	            
 	            main.updatePossessMap(p.getUniqueId(), possessedEntity);
+	            p.setAllowFlight(possessedEntity.isFlying());
 	        }
 	    }
 	}

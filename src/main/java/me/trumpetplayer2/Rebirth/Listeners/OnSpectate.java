@@ -33,12 +33,16 @@ public class OnSpectate implements Listener{
 	if(!(entity instanceof LivingEntity)) {e.setCancelled(true); return;}
 	PossessedEntityType possessedEntity;
     possessedEntity = PossessedEntityList.getPossessedEntity((LivingEntity) entity);
+    if(possessedEntity == null) {
+        e.setCancelled(true);
+        return;
+    }
     if(!((entity instanceof Player) || (entity instanceof Villager))){
         entity.remove();
     }
     WatcherStuff(p, possessedEntity);
+    p.setAllowFlight(possessedEntity.isFlying());
 	e.setCancelled(true);
-	
     }
         
     public void WatcherStuff(Player p, PossessedEntityType e) {

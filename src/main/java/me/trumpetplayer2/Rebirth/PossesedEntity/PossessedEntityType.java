@@ -14,4 +14,6 @@ public interface PossessedEntityType {
     public Disguise getDisguise();
     public boolean isAquatic();
     public void load(String dataPath, FileConfiguration dataConfig, File dataFile);
+    public boolean isVampire();
+    public boolean isFlying();
 }

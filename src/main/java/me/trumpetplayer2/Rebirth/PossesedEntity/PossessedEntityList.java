@@ -29,6 +29,8 @@ public class PossessedEntityList {
     	maxHealth = entity.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue();
         //Anything with Saddles, remove to prevent confusion
         switch(e) {
+        case WITHER, ENDER_DRAGON, WARDEN, ELDER_GUARDIAN:
+            return null;
         case AXOLOTL:
             //Axolotl Colors, special class
             return new AxolotlEntity(entity, maxHealth);
@@ -51,7 +53,7 @@ public class PossessedEntityList {
             //Charged - Special class
             return new CreeperEntity(entity, maxHealth);
         case DROWNED:
-            //Generic Baby Aquatic
+            //Generic Baby Aquatic Semiaquatic
         	return new GenericAquaticBabyableEntity(entity, maxHealth);
         case DONKEY:
             //Generic Baby

@@ -15,10 +15,23 @@ public class GenericPossessedEntity implements PossessedEntityType{
 
     private EntityType entity;
     private double maxHealth = 20;
+    private boolean vampiric = false;
+    private boolean canFly = false;
     
     public GenericPossessedEntity(Entity ent, double health) {
         entity = ent.getType();
         maxHealth = health;
+        switch(entity) {
+        case ZOMBIE, SKELETON, DROWNED, HUSK, STRAY:
+            vampiric = true;
+            break;
+        case PHANTOM:
+            vampiric = true;
+        case BAT, GHAST, PARROT, ALLAY:
+            canFly = true;
+        default:
+            break;
+        }
     }
     
     protected void setEntityType(EntityType ent) {
@@ -69,4 +82,14 @@ public class GenericPossessedEntity implements PossessedEntityType{
 		//However there is nothing needed here
 	}
     
+	@Override
+	public boolean isVampire(){
+	    return vampiric;
+	}
+
+    @Override
+    public boolean isFlying() {
+        return canFly;
+    }
+	
 }
