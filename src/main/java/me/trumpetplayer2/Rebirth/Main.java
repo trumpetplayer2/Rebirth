@@ -90,7 +90,7 @@ public class Main extends JavaPlugin implements Listener {
 		this.getServer().getPluginManager().registerEvents(new OnChat(this), this);
 		this.getServer().getPluginManager().registerEvents(new OnJoin(this), this);
 		this.getServer().getPluginManager().registerEvents(new OnLeave(this), this);
-		this.getServer().getPluginManager().registerEvents(new onPlayerBreath(), this);
+		this.getServer().getPluginManager().registerEvents(new AquaticBreatheListener(), this);
 		this.getServer().getPluginManager().registerEvents(new onDimensionChange(), this);
 		schedule();
 		loadConfig();
@@ -110,9 +110,9 @@ public class Main extends JavaPlugin implements Listener {
 	private void burnVampires() {
 	    for(Player p : Bukkit.getOnlinePlayers()) {
 	        if(!possessMap.get(p.getUniqueId()).isVampire()) continue;
-	        if(p.getInventory().getHelmet().getType() != null) continue;
-	        if(p.getInventory().getHelmet().getType() != Material.AIR) continue;
-	        if(!(p.getLocation().getWorld().getTime() > 23850 || p.getLocation().getWorld().getTime() < 23850)) continue;
+	        if(p.getInventory().getHelmet() == null) continue;
+	        if(p.getInventory().getHelmet().getType() == Material.AIR) continue;
+	        if(p.getLocation().getWorld().getTime() % 24000 > 12542 && p.getLocation().getWorld().getTime() % 24000 > 23460) continue;
 	        if(!(p.getLocation().getBlock().getLightFromSky() > 11)) continue;
 	        p.setFireTicks(160);
 	    }
@@ -128,10 +128,11 @@ public class Main extends JavaPlugin implements Listener {
 	            int air = p.getRemainingAir();
 	            //Fire Event
 	            playerBreathEvent e = new playerBreathEvent(p, breathMap.get(p.getUniqueId()), air);
-	            getServer().getPluginManager().callEvent(e);
+	            Bukkit.getServer().getPluginManager().callEvent(e);
 	            if(!e.isCancelled()) {
 	                air = e.getNewOxygen();
 	                p.setRemainingAir(air);
+	                
 	            }else {
 	                p.setRemainingAir(breathMap.get(p.getUniqueId()));
 	            }
