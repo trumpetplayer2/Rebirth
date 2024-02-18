@@ -4,6 +4,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Player;
 
 import me.trumpetplayer2.Rebirth.PossesedEntity.Passive.Aquatic.*;
 import me.trumpetplayer2.Rebirth.PossesedEntity.Hostile.*;
@@ -27,6 +28,9 @@ public class PossessedEntityList {
         EntityType e = entity.getType();
     	double maxHealth = 20;
     	maxHealth = entity.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue();
+    	if(entity instanceof Player) {
+    	    maxHealth = 20;
+    	}
         //Anything with Saddles, remove to prevent confusion
         switch(e) {
         case WITHER, ENDER_DRAGON, WARDEN, ELDER_GUARDIAN:
@@ -70,6 +74,8 @@ public class PossessedEntityList {
         case GOAT:
             //Generic Baby
         	return new GenericBabyableEntity(entity, maxHealth);
+        case GUARDIAN:
+            return new GenericAquaticEntity(entity, maxHealth);
         case HOGLIN:
             //Generic Baby
         	return new GenericBabyableEntity(entity, maxHealth);

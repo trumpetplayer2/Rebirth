@@ -110,9 +110,8 @@ public class Main extends JavaPlugin implements Listener {
 	private void burnVampires() {
 	    for(Player p : Bukkit.getOnlinePlayers()) {
 	        if(!possessMap.get(p.getUniqueId()).isVampire()) continue;
-	        if(p.getInventory().getHelmet() == null) continue;
-	        if(p.getInventory().getHelmet().getType() == Material.AIR) continue;
-	        if(p.getLocation().getWorld().getTime() % 24000 > 12542 && p.getLocation().getWorld().getTime() % 24000 > 23460) continue;
+	        if(p.getInventory().getHelmet() != null) continue;
+	        if(p.getLocation().getWorld().getTime() % 24000 > 12542 && p.getLocation().getWorld().getTime() % 24000 < 23460) continue;
 	        if(!(p.getLocation().getBlock().getLightFromSky() > 11)) continue;
 	        p.setFireTicks(160);
 	    }

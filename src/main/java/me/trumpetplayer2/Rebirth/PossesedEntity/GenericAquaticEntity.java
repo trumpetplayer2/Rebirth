@@ -9,7 +9,7 @@ public class GenericAquaticEntity extends GenericPossessedEntity {
 	public GenericAquaticEntity(Entity ent, double health) {
 		super(ent, health);
 		switch (ent.getType()) {
-		case FROG, DROWNED, TURTLE:
+		case FROG, DROWNED, TURTLE, GUARDIAN:
 		    semiAquatic = true;
 		    break;
 		default:
