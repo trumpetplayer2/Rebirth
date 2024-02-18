@@ -75,6 +75,7 @@ public class PossessedEntityList {
             //Generic Baby
         	return new GenericBabyableEntity(entity, maxHealth);
         case GUARDIAN:
+            //Generic Semiaquatic
             return new GenericAquaticEntity(entity, maxHealth);
         case HOGLIN:
             //Generic Baby
