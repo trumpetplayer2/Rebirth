@@ -2,9 +2,11 @@ package me.trumpetplayer2.Rebirth.PossesedEntity;
 
 import java.io.File;
 import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 import java.util.UUID;
 
+import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
@@ -17,6 +19,12 @@ import me.libraryaddict.disguise.disguisetypes.watchers.PlayerWatcher;
 import me.trumpetplayer2.Rebirth.Main;
 import me.trumpetplayer2.Rebirth.Debug.Debug;
 import me.trumpetplayer2.Rebirth.Utils.SkinFetcher;
+import net.skinsrestorer.api.SkinsRestorer;
+import net.skinsrestorer.api.SkinsRestorerProvider;
+import net.skinsrestorer.api.property.InputDataResult;
+import net.skinsrestorer.api.property.SkinProperty;
+import net.skinsrestorer.api.storage.PlayerStorage;
+import net.skinsrestorer.api.storage.SkinStorage;
 
 public class PossessedPlayerEntity extends GenericPossessedEntity {
 
@@ -96,7 +104,7 @@ public class PossessedPlayerEntity extends GenericPossessedEntity {
             
         }
         disguise = new PlayerDisguise(name);
-        disguise.setViewSelfDisguise(true);
+        disguise.setViewSelfDisguise(false);
         
         PlayerWatcher watcher = (PlayerWatcher) disguise.getWatcher();
         watcher.setName(name);
@@ -107,6 +115,30 @@ public class PossessedPlayerEntity extends GenericPossessedEntity {
         
         return disguise;
     }
+	
+	public void updatePlayerSkin(Player p) {
+	    try {
+	        updateSkinData();
+	        //Use skinrestorer so player can see self
+	        SkinsRestorer skinsRestorerAPI = SkinsRestorerProvider.get();
+	        //Grab Player Storage
+	        PlayerStorage playerStorage = skinsRestorerAPI.getPlayerStorage();
+	        SkinStorage skinStorage = skinsRestorerAPI.getSkinStorage();
+	        Optional<InputDataResult> result = skinStorage.findOrCreateSkinData(skin.toString());
+
+            if (result.isEmpty()) {
+                Debug.log(ChatColor.RED + "Skin not found!");
+                return;
+            }
+	        // Associate the skin with the player
+            playerStorage.setSkinIdOfPlayer(p.getUniqueId(), result.get().getIdentifier());
+	        
+	        // Instantly apply skin to the player without requiring the player to rejoin
+	        skinsRestorerAPI.getSkinApplier(Player.class).applySkin(p);
+	    }catch(Exception e) {
+	        e.printStackTrace();
+	    }
+	}
     
     @Override
     public void load(String dataPath, FileConfiguration dataConfig, File dataFile) {
@@ -122,6 +154,28 @@ public class PossessedPlayerEntity extends GenericPossessedEntity {
                 name = dataConfig.getString(dataPath + ".Name");
             }
         }
+    }
+    
+    void updateSkinData() {
+      //Update data in database
+        SkinsRestorer skinsRestorerAPI = SkinsRestorerProvider.get();
+        SkinStorage skinStorage = skinsRestorerAPI.getSkinStorage();
+        SkinFetcher playerInfo = new SkinFetcher(skin);            
+        //Setup a Skin Property
+        String value = playerInfo.getProperty("value");
+        String signature = playerInfo.getProperty("signature");
+        if(value == null || signature == null) {
+            if(value == null) {
+                Debug.log("Value was null");
+            }
+            if(signature == null) {
+                Debug.log("Signature was null");
+            }
+            return;
+        }
+        
+        SkinProperty properties = SkinProperty.of(value, signature);
+        skinStorage.setCustomSkinData(skin.toString(), properties);
     }
     
     @Override

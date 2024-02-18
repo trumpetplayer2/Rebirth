@@ -55,7 +55,6 @@ public class OnSpectate implements Listener{
             PlayerDisguise disguise = (PlayerDisguise) ent.getDisguise();
             p.sendMessage("You are " + ent.getName());
             disguise.setEntity(p);
-            disguise.setViewSelfDisguise(true);
             p.setGameMode(GameMode.SURVIVAL);
             disguise.startDisguise();
             p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(ent.getEntityMaxHealth());
@@ -63,6 +62,7 @@ public class OnSpectate implements Listener{
                 disguise.removeDisguise(p);
             }
             Main.getInstance().updatePossessMap(p.getUniqueId(), ent);
+            ent.updatePlayerSkin(p);
             return;
         }
         

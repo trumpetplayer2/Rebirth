@@ -94,16 +94,17 @@ public class OnJoin implements Listener{
             if(p.getUniqueId() == ent.getSkin() && p.getName() == ent.getName()) {
                 disguise.removeDisguise(p);
             }
+            ent.updatePlayerSkin(p);
             return;
         }
 	
-	Disguise disguise = e.getDisguise();
+        Disguise disguise = e.getDisguise();
 	
-	p.sendMessage("You are a " + e.getEntityType().toString().toLowerCase());
-	disguise.setEntity(p);
-	p.setGameMode(GameMode.SURVIVAL);
-	disguise.startDisguise();
-	p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(e.getEntityMaxHealth());
+        p.sendMessage("You are a " + e.getEntityType().toString().toLowerCase());
+        disguise.setEntity(p);
+        p.setGameMode(GameMode.SURVIVAL);
+        disguise.startDisguise();
+        p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(e.getEntityMaxHealth());
     }
     
     Debug debug = new Debug();

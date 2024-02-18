@@ -3,6 +3,7 @@ name: Rebirth
 version: 1.0
 author: Trumpetplayer2
 api-version: 1.19
+depend: ["SkinsRestorer", "LibsDisguises"]
 
 commands:
   Rebirth:

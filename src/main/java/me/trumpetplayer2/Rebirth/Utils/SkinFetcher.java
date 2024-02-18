@@ -15,14 +15,12 @@ import javax.net.ssl.HttpsURLConnection;
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
 
-import me.trumpetplayer2.Rebirth.Debug.Debug;
-
 
 public class SkinFetcher {
     static private String API_PROFILE_LINK = "https://sessionserver.mojang.com/session/minecraft/profile/";
     
     HashMap<String, String> playerInfo = new HashMap<String, String>();
-    HashMap<String, HashMap<String, String>> properties = new HashMap<String, HashMap<String, String>>();
+    HashMap<String, String> properties = new HashMap<String, String>();
     
     public SkinFetcher(UUID player) {
         String data = getContent(API_PROFILE_LINK + player.toString() + "?unsigned=false");
@@ -42,15 +40,10 @@ public class SkinFetcher {
             while(reader.hasNext()) {
                 //Begin Object
                 reader.beginObject();
-                reader.nextName();
-                String temp = reader.nextString();
-                Debug.log(temp);
-                HashMap<String, String> value = new HashMap<String, String>();
                 while(reader.hasNext()) {
                     //Store the "Name" value and the "Value" value - In this case, Textures and UUID
-                    value.put(reader.nextName(), reader.nextString());
+                    properties.put(reader.nextName(), reader.nextString());
                 }
-                properties.put(temp, value);
                 //End Object
                 reader.endObject();
             }
@@ -76,7 +69,7 @@ public class SkinFetcher {
         return playerInfo.get(key);
     }
     
-    public HashMap<String, String> getProperty(String key){
+    public String getProperty(String key){
         if(!properties.containsKey(key)) return null;
         return properties.get(key);
     }

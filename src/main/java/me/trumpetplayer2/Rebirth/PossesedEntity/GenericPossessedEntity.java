@@ -27,7 +27,7 @@ public class GenericPossessedEntity implements PossessedEntityType{
             break;
         case PHANTOM:
             vampiric = true;
-        case BAT, GHAST, PARROT, ALLAY:
+        case BAT, GHAST, PARROT, ALLAY, BLAZE, BEE:
             canFly = true;
         default:
             break;
