@@ -79,6 +79,7 @@ public class Main extends JavaPlugin implements Listener {
 	public void onEnable() {
 	    instance = this;
 		//Start, reload
+	    //Requires Skin Restorer
 		this.saveDefaultConfig();
 		this.saveDefaultConfigs();
 		getCommand("rebirth").setExecutor(new RebirthCommand());
