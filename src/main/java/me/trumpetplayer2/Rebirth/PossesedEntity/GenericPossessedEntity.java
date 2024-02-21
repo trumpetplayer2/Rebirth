@@ -14,6 +14,7 @@ import org.bukkit.potion.PotionEffectType;
 import me.libraryaddict.disguise.disguisetypes.Disguise;
 import me.libraryaddict.disguise.disguisetypes.DisguiseType;
 import me.libraryaddict.disguise.disguisetypes.MobDisguise;
+import me.trumpetplayer2.Rebirth.Debug.Debug;
 
 public class GenericPossessedEntity implements PossessedEntityType{
 
@@ -55,6 +56,7 @@ public class GenericPossessedEntity implements PossessedEntityType{
     
     public void applyEffects(Player p) {
         for(PotionEffect e : effects) {
+            Debug.log(e.getType().toString());
             p.addPotionEffect(e);
         }
     }

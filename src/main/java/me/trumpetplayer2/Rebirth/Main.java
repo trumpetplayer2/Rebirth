@@ -111,7 +111,7 @@ public class Main extends JavaPlugin implements Listener {
 	private void updateEffects() {
 	    for(UUID u : possessMap.keySet()) {
 	        Player p = Bukkit.getPlayer(u);
-	        PossessedEntityType e = possessMap.get(p);
+	        PossessedEntityType e = possessMap.get(u);
 	        e.applyEffects(p);
 	    }
 	}
