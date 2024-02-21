@@ -74,8 +74,8 @@ public class OnSpectate implements Listener{
         p.setGameMode(GameMode.SURVIVAL);
         disguise.startDisguise();
         p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(e.getEntityMaxHealth());
-        Main.getInstance().updatePossessMap(p.getUniqueId(), e);
         e.applyEffects(p);
+        Main.getInstance().updatePossessMap(p.getUniqueId(), e);
         }
     
 }

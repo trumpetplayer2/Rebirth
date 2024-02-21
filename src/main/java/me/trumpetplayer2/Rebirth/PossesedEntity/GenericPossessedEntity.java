@@ -84,7 +84,7 @@ public class GenericPossessedEntity implements PossessedEntityType{
     	dataPath += ".";
     	if(dataConfig.getConfigurationSection(dataPath) == null) {
     	    dataConfig.createSection(dataPath);
-    	    }
+    	}
     	dataConfig.getConfigurationSection(dataPath).set("EntityType", entity.toString());
     	
     }

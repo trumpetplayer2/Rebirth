@@ -24,14 +24,6 @@ public class GenericBabyableEntity extends GenericPossessedEntity {
 	@Override
 	public void save(String dataPath, FileConfiguration dataConfig, File dataFile) {
 	    super.save(dataPath, dataConfig, dataFile);
-		Map<String, Object> configValues = dataConfig.getConfigurationSection(dataPath).getValues(false);
-    	for (Map.Entry<String, Object> entry : configValues.entrySet()) {
-    	    dataConfig.getConfigurationSection(dataPath).set(entry.getKey(), null);
-    	}
-    	dataPath += ".";
-    	if(dataConfig.getConfigurationSection(dataPath) == null) {
-    	    dataConfig.createSection(dataPath);
-    	    }
     	dataConfig.getConfigurationSection(dataPath).set("Baby", isBaby);
 	}
 

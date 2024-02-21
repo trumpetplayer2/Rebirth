@@ -33,14 +33,7 @@ public class GenericSlimeEntity extends GenericPossessedEntity {
 
     @Override
     public void save(String dataPath, FileConfiguration dataConfig, File dataFile) {
-        Map<String, Object> configValues = dataConfig.getConfigurationSection(dataPath).getValues(false);
-        for (Map.Entry<String, Object> entry : configValues.entrySet()) {
-            dataConfig.getConfigurationSection(dataPath).set(entry.getKey(), null);
-        }
-        dataPath += ".";
-        if(dataConfig.getConfigurationSection(dataPath) == null) {
-            dataConfig.createSection(dataPath);
-            }
+        super.save(dataPath, dataConfig, dataFile);
         dataConfig.getConfigurationSection(dataPath).set("EntityType", super.getEntityType().toString());
         dataConfig.getConfigurationSection(dataPath).set("Size", size);
         
