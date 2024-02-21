@@ -1,11 +1,15 @@
 package me.trumpetplayer2.Rebirth.PossesedEntity;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Map;
 
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Player;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 import me.libraryaddict.disguise.disguisetypes.Disguise;
 import me.libraryaddict.disguise.disguisetypes.DisguiseType;
@@ -17,6 +21,7 @@ public class GenericPossessedEntity implements PossessedEntityType{
     private double maxHealth = 20;
     private boolean vampiric = false;
     private boolean canFly = false;
+    private ArrayList<PotionEffect> effects = new ArrayList<PotionEffect>();
     
     public GenericPossessedEntity(Entity ent, double health) {
         entity = ent.getType();
@@ -31,6 +36,26 @@ public class GenericPossessedEntity implements PossessedEntityType{
             canFly = true;
         default:
             break;
+        }
+        //Effects
+        switch(entity) {
+        case CHICKEN:
+            effects.add(new PotionEffect(PotionEffectType.SLOW_FALLING, 30*20, 1, true, false, false));
+            break;
+        case DOLPHIN:
+            effects.add(new PotionEffect(PotionEffectType.DOLPHINS_GRACE, 30*20, 1, true, false, false));
+            break;
+        case BLAZE, GHAST, MAGMA_CUBE, STRIDER, WITHER_SKELETON, ZOGLIN, ZOMBIFIED_PIGLIN:
+            effects.add(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 30*20, 1, true, false, false));
+            break;
+        default:
+            break;
+        }
+    }
+    
+    public void applyEffects(Player p) {
+        for(PotionEffect e : effects) {
+            p.addPotionEffect(e);
         }
     }
     
@@ -90,6 +115,11 @@ public class GenericPossessedEntity implements PossessedEntityType{
     @Override
     public boolean isFlying() {
         return canFly;
+    }
+
+    @Override
+    public PotionEffect[] getEffectList() {
+        return (PotionEffect[]) effects.toArray();
     }
 	
 }

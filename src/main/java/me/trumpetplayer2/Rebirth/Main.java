@@ -105,6 +105,15 @@ public class Main extends JavaPlugin implements Listener {
 	private void schedule() {
 	    Bukkit.getScheduler().scheduleSyncRepeatingTask(this, () -> breathEventCaller(), 0, 20);
 	    Bukkit.getScheduler().scheduleSyncRepeatingTask(this, () -> burnVampires(), 0, 100);
+	    Bukkit.getScheduler().scheduleSyncRepeatingTask(this, () -> updateEffects(), 0, 25 * 20);
+	}
+	
+	private void updateEffects() {
+	    for(UUID u : possessMap.keySet()) {
+	        Player p = Bukkit.getPlayer(u);
+	        PossessedEntityType e = possessMap.get(p);
+	        e.applyEffects(p);
+	    }
 	}
 	
 	private void burnVampires() {
