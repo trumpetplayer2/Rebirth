@@ -105,6 +105,7 @@ public class OnJoin implements Listener{
         p.setGameMode(GameMode.SURVIVAL);
         disguise.startDisguise();
         p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(e.getEntityMaxHealth());
+        e.applyEffects(p);
     }
     
     Debug debug = new Debug();
